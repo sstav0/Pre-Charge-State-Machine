@@ -163,7 +163,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8220D591-1DEA-4AEA-B31F-D2B0FE65F197}" Name="state_machine_prj" PrjFilePath="state_machine_prj\state_machine_prj.plcproj" TmcFilePath="state_machine_prj\state_machine_prj.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="state_machine_prj\state_machine_prj.tmc" TmcHash="{921D0886-95B6-F463-F209-1E7B94C2136C}">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="state_machine_prj\state_machine_prj.tmc" TmcHash="{9F492200-10CE-87D1-13FB-30DF2C27B5CA}">
 					<Name>state_machine_prj Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -237,9 +237,9 @@
 			</Project>
 		</Plc>
 		<Safety>
-			<Project GUID="{1BC8FD71-D805-4B31-9E5B-E864E653272B}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.splcProj" TmcFilePath="Untitled1\Untitled1.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+			<Project GUID="{1BC8FD71-D805-4B31-9E5B-E864E653272B}" Name="SAFETY-CAT3" PrjFilePath="SAFETY-CAT3\SAFETY-CAT3.splcproj" TmcFilePath="SAFETY-CAT3\SAFETY-CAT3.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" KeepUnrestoredLinks="2">
-					<Name>Untitled1 Instance</Name>
+					<Name>SAFETY-CAT3 Instance</Name>
 					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
 						<Name>Safety</Name>
 						<InitSequence>PO</InitSequence>
