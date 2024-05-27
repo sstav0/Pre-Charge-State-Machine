@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{25bc4d3c-79d9-46b3-9afb-c86d00564f33}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+// Variables, constants ... are created (instanced) here
+VAR
+	(* Inputs *)
+	n_V_sensors 				AT %I* 		: ARRAY[0..1] OF INT; // defining 2 elements array of INT type as input to the PLC task
+	n_A_sensors 				AT %I*		: ARRAY[0..1] OF INT; 
+	
+	b_reset						AT %I*		: BOOL;
+	b_estop						AT %I*		: BOOL;
+
+	b_main_contactors_fb 		AT %I* 		: ARRAY[0..1] OF BOOL; // defining 4 elements array of BOOL type as input of feedback for the contactors to the PLC task
+	b_bypass_contactors_fb 		AT %I* 		: ARRAY[0..1] OF BOOL;
+	
+	b_resetLed					AT %I*		: BOOL; 
+	
+	(* Outputs *)
+	b_main_contactors			AT %Q*		: ARRAY[0..1] OF BOOL; // defining 4 elements array of BOOL type as outpout to the PLC task
+	b_bypass_contactors			AT %Q*		: ARRAY[0..1] OF BOOL;
+
+	(* FB_MACHINE *) 
+	b_user_button							: BOOL := FALSE;
+	b_discharge								: BOOL := FALSE;
+	n_lower_boundV							: INT := 380;
+	n_upper_boundV							: INT := 460; 
+	n_minV 									: INT := 5;
+	
+	t_max_time								: TIME := T#250MS; //5x the time constant for a RC circuit with R=100ohms and C=235µF
+	
+	fbMachine 								: FB_MACHINE(nLowerBoundV := n_lower_boundV,
+													     nUpperBoundV := n_upper_boundV,
+													     nMinV := n_minV,
+													     tMaxTime := t_max_time); 
+	(*Visualisation variables*)
+    sState         							: STRING;
+	n_V_sensors_scaled 						: ARRAY[0..1] OF REAL; // defining 2 elements array of INT type as input to the PLC task
+	n_A_sensors_scaled						: ARRAY[0..1] OF REAL;
+	sLog									: ARRAY[0..19] OF STRING(600); 
+	
+	(* FILE_WRITER VARIABLES *) 
+	sFilePath 								: STRING := 'C:\Users\Administrator\Desktop\AXav-Precharge_Curbs\'; //default file path for the data
+    
+	arrVoltageData    						: ARRAY [0..1] OF ST_MyData;
+	arrCurrentData							: ARRAY [0..1] OF ST_MyData;
+	arrBypassData							: ARRAY [0..1] OF ST_MyData;
+	arrMainData								: ARRAY [0..1] OF ST_MyData;
+	
+    nIteration      						: UDINT:=0;
+    bStartNewJob    						: BOOL := FALSE; // When set to false the FileWriter is active
+	bFirstLoop								: BOOL := TRUE; // Allows to write the header of the file on the first loop (then it will be set to FALSE for the rest of the task)
+	tStartTime								: TIME;
+	
+	fbVoltage1								: FB_FileWriter; 
+	fbCurrent1								: FB_FileWriter; 
+	fbVoltage2								: FB_FileWriter;
+	fbCurrent2								: FB_FileWriter;
+	fbBypass1								: FB_FileWriter;
+	fbBypass2								: FB_FileWriter; 
+	fbMain1									: FB_FileWriter; 
+	fbMain2									: FB_FileWriter; 
+	
+	fbFormatString  						: FB_FormatString;
+	fbFormatString1  						: FB_FormatString;
+	fbFormatString2							: FB_FormatString; 
+	fbFormatString3							: FB_FormatString;
+	
+	sHeader									: STRING := 'ID;VALUE;TIMESTAMP$n';
+
+	n_Idx									: INT := 0;
+	fileBlocks 								: ARRAY[0..3] OF  FB_FileWriter := [fbCurrent1, fbCurrent2, fbVoltage1, fbVoltage2];
+	fileBlocksContactors					: ARRAY[0..3] OF  FB_FileWriter := [fbBypass1, fbBypass2, fbMain1, fbMain2];
+    s_fileNames 							: ARRAY[0..3] OF STRING := ['SupplyCurrent.txt', 'LoadCurrent.txt', 'SupplyVoltage.txt', 'LoadVoltage.txt'];
+	s_fileNamesContactors					: ARRAY[0..3] OF STRING := ['BypassContactor1.txt', 'BypassContactor2.txt', 'MainContactor1.txt', 'MainContactor2.txt'];
+	s_FBStates								: ARRAY[0..3] OF STRING;
+	s_FBStatesContactors					: ARRAY[0..3] OF STRING; 
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* ---------------------------- STATE MACHINE ------------------------------- *) 
+fbMachine.Run(
+			bAck:=b_user_button, 
+			bDischarge := b_discharge, 
+			nVSensors := n_V_Sensors, 
+			nASensors := n_A_Sensors, 
+			bBypassContactorsFB := b_bypass_contactors_fb,
+			bMainContactorsFB := b_main_contactors_fb,
+			bReset := b_reset,
+			bESTOP := b_estop,
+			bMainContactors => b_main_contactors, 
+			bBypassContactors => b_bypass_contactors,
+			);
+
+(* --------------------- Visualisation properties ---------------------- *) 
+// I need to link local variables with "fbMachine" properties because it is not possible to link a visualisation object (e.g. textbox) with a function box property
+sState := fbMachine.ipState.Description;
+n_V_sensors_scaled := fbMachine.VSensors; 
+n_A_sensors_scaled := fbMachine.ASensors; 
+sLog := fbMachine.Logs; 
+
+(* --------------------- Data Saving ----------------------------- *)	
+FOR n_Idx := 0 TO 3 DO
+	fileBlocks[n_Idx](
+		sFileName := s_fileNames[n_Idx],
+		sFilePath := sFilePath,
+		sNetId    := '');
+		
+	fileBlocksContactors[n_Idx](
+		sFileName := s_fileNamesContactors[n_Idx],
+		sFilePath := sFilePath,
+		sNetId    := '');
+			
+	s_FBStates[n_Idx] := fileBlocks[n_Idx].FileWriteState; // STRING states to display in the visualisation file
+	s_FBStatesContactors[n_Idx] := fileBlocksContactors[n_Idx].FileWriteState; // STRING states to display in the visualisation file
+END_FOR	
+
+IF bFirstLoop THEN // On the first loop
+	FOR n_Idx := 0 TO 3 DO
+		fileBlocks[n_Idx].WriteToFile(message := sHeader); // write the header of the file 
+		fileBlocksContactors[n_Idx].WriteToFile(message := sHeader); // write the header of the file 
+	END_FOR	
+	tStartTime := TIME();
+	bFirstLoop := FALSE;
+END_IF
+
+IF bStartNewJob THEN 
+	// save the new data to the struct variable
+	FOR n_Idx := 0 TO 1 DO
+		arrVoltageData[n_Idx].Id := nIteration;
+		arrVoltageData[n_Idx].Value := n_V_sensors_scaled[n_Idx];
+		arrVoltageData[n_Idx].Timestamp := DINT_TO_STRING(TO_DINT(TIME() - tStartTime));
+	
+		arrCurrentData[n_Idx].Id := nIteration;
+		arrCurrentData[n_Idx].Value :=n_A_sensors_scaled[n_Idx];
+		arrCurrentData[n_Idx].Timestamp := DINT_TO_STRING(TO_DINT(TIME() - tStartTime)); 
+		
+		arrBypassData[n_Idx].Id := nIteration;
+		arrBypassData[n_Idx].Value := BOOL_TO_REAL(b_bypass_contactors_fb[n_Idx]);
+		arrBypassData[n_Idx].Timestamp := DINT_TO_STRING(TO_DINT(TIME() - tStartTime));
+	
+		arrMainData[n_Idx].Id := nIteration;
+		arrMainData[n_Idx].Value :=BOOL_TO_REAL(b_main_contactors[n_Idx]);
+		arrMainData[n_Idx].Timestamp := DINT_TO_STRING(TO_DINT(TIME() - tStartTime)); 
+	END_FOR
+	// write the data in the text file 
+	FOR n_Idx := 0 TO 1 DO
+		fbFormatString(
+			sFormat := '%d;%f;%s$n',
+			arg1    := F_UDINT(arrCurrentData[n_Idx].Id),
+			arg2    := F_REAL(arrCurrentData[n_Idx].Value),
+			arg3    := F_STRING(arrCurrentData[n_Idx].Timestamp));
+		fileBlocks[n_Idx].WriteToFile(fbFormatString.sOut);
+		fbFormatString1(
+			sFormat := '%d;%f;%s$n',
+			arg1    := F_UDINT(arrVoltageData[n_Idx].Id),
+			arg2    := F_REAL(arrVoltageData[n_Idx].Value),
+			arg3    := F_STRING(arrVoltageData[n_Idx].Timestamp));
+		fileBlocks[n_Idx+2].WriteToFile(fbFormatString1.sOut);
+		fbFormatString2(
+			sFormat := '%d;%f;%s$n',
+			arg1    := F_UDINT(arrBypassData[n_Idx].Id),
+			arg2    := F_REAL(arrBypassData[n_Idx].Value),
+			arg3    := F_STRING(arrBypassData[n_Idx].Timestamp));
+		fileBlocksContactors[n_Idx].WriteToFile(fbFormatString2.sOut);
+		fbFormatString3(
+			sFormat := '%d;%f;%s$n',
+			arg1    := F_UDINT(arrMainData[n_Idx].Id),
+			arg2    := F_REAL(arrMainData[n_Idx].Value),
+			arg3    := F_STRING(arrMainData[n_Idx].Timestamp));
+		fileBlocksContactors[n_Idx+2].WriteToFile(fbFormatString3.sOut);
+	END_FOR
+	nIteration := nIteration + 1;
+END_IF
+
+
+
+
+
+
+		  
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="717" Count="0" />
+      <LineId Id="546" Count="0" />
+      <LineId Id="654" Count="0" />
+      <LineId Id="653" Count="0" />
+      <LineId Id="655" Count="1" />
+      <LineId Id="662" Count="1" />
+      <LineId Id="895" Count="1" />
+      <LineId Id="657" Count="2" />
+      <LineId Id="633" Count="0" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="699" Count="0" />
+      <LineId Id="635" Count="0" />
+      <LineId Id="644" Count="1" />
+      <LineId Id="647" Count="0" />
+      <LineId Id="643" Count="0" />
+      <LineId Id="732" Count="0" />
+      <LineId Id="1186" Count="0" />
+      <LineId Id="1316" Count="2" />
+      <LineId Id="1315" Count="0" />
+      <LineId Id="1473" Count="0" />
+      <LineId Id="1439" Count="3" />
+      <LineId Id="1438" Count="0" />
+      <LineId Id="1188" Count="0" />
+      <LineId Id="1444" Count="0" />
+      <LineId Id="1185" Count="0" />
+      <LineId Id="1088" Count="0" />
+      <LineId Id="1156" Count="0" />
+      <LineId Id="1160" Count="1" />
+      <LineId Id="1446" Count="0" />
+      <LineId Id="1157" Count="0" />
+      <LineId Id="1366" Count="0" />
+      <LineId Id="1159" Count="0" />
+      <LineId Id="1158" Count="0" />
+      <LineId Id="1162" Count="1" />
+      <LineId Id="1367" Count="0" />
+      <LineId Id="1169" Count="7" />
+      <LineId Id="1450" Count="0" />
+      <LineId Id="1453" Count="5" />
+      <LineId Id="1452" Count="0" />
+      <LineId Id="1164" Count="0" />
+      <LineId Id="1368" Count="0" />
+      <LineId Id="1328" Count="0" />
+      <LineId Id="1333" Count="3" />
+      <LineId Id="1332" Count="0" />
+      <LineId Id="1326" Count="0" />
+      <LineId Id="1338" Count="4" />
+      <LineId Id="1337" Count="0" />
+      <LineId Id="1460" Count="4" />
+      <LineId Id="1459" Count="0" />
+      <LineId Id="1466" Count="4" />
+      <LineId Id="1465" Count="0" />
+      <LineId Id="1177" Count="0" />
+      <LineId Id="1196" Count="0" />
+      <LineId Id="1165" Count="0" />
+      <LineId Id="1089" Count="0" />
+      <LineId Id="757" Count="0" />
+      <LineId Id="779" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

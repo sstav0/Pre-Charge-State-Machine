@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_FileWriter" Id="{7ec5e9a7-2d10-4582-aa4f-c19345b5de2f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_FileWriter
+VAR_INPUT
+	sFilePath					: T_MaxString; 
+	sFileName					: T_MaxString;
+	sNetId						: STRING; // NetId of the target, leave empty for local
+END_VAR
+VAR CONSTANT
+	nArrBufferSize				: INT := 1000; 	
+END_VAR
+VAR
+    fbFileOpen  				: FB_FileOpen;
+    fbFilePuts  				: FB_FilePuts;
+    fbFileClose 				: FB_FileClose;
+    nFileHandle 				: UINT;
+	
+    arrBuffer   				: ARRAY[0..nArrBufferSize] OF T_MaxString;
+    eFileWriteState 			: (IDLE, OPEN_FILE, WRITE_TO_FILE, CLOSE_FILE, ERROR);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE eFileWriteState OF
+    IDLE:
+        // Make sure all the file writing FBs are ready for use (trigger on execute)
+        Init();
+        
+        // We have pending data to be written
+        IF arrBuffer[0] <> '' THEN // Makes sure that the first element of the array is not an empty string 
+            eFileWriteState := OPEN_FILE;
+        END_IF
+        
+    OPEN_FILE:
+        // Opens a file for writing at the end of the file (append). 
+        // If the file does not exist, a new file is created.
+        fbFileOpen(
+            bExecute    := TRUE,
+            sNetId      := sNetId,
+            sPathName   := CONCAT(sFilePath, sFileName),
+            nMode       := FOPEN_MODEAPPEND);
+            
+        IF fbFileOpen.bError THEN
+            eFileWriteState := ERROR;
+        ELSIF NOT fbFileOpen.bBusy THEN
+            nFileHandle := fbFileOpen.hFile;
+            fbFileOpen(bExecute := FALSE);
+            eFileWriteState := WRITE_TO_FILE;
+        END_IF
+    
+    WRITE_TO_FILE:
+        fbFilePuts(
+            bExecute    := TRUE,
+            sNetId      := sNetId,
+            hFile       := nFileHandle,
+            sLine       := arrBuffer[0]); // Write the first element of the buffer
+        
+        IF fbFilePuts.bError THEN
+            eFileWriteState := ERROR;
+        ELSIF NOT fbFilePuts.bBusy THEN
+            fbFilePuts(bExecute := FALSE);
+            RotateBuffer(); // Remove the written data from the buffer
+            eFileWriteState := CLOSE_FILE;
+        END_IF
+    
+    CLOSE_FILE:
+        fbFileClose(
+            bExecute := TRUE,
+            sNetId      := sNetId,
+            hFile       := nFileHandle);
+            
+        IF fbFileClose.bError THEN
+            eFileWriteState := ERROR;
+        ELSIF NOT fbFileClose.bBusy THEN
+            nFileHandle := 0;
+            eFileWriteState := IDLE;
+        END_IF      
+    
+    ERROR:
+        // Error, clear the handle and go back to idle
+        nFileHandle := 0;
+        eFileWriteState := IDLE;
+END_CASE]]></ST>
+    </Implementation>
+    <Property Name="FileWriteState" Id="{a921f34b-1325-4092-9bb6-f04add859cbc}">
+      <Declaration><![CDATA[PROPERTY PUBLIC FileWriteState : STRING]]></Declaration>
+      <Get Name="Get" Id="{60b04697-2267-4456-9987-9daa8ed392d7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CASE eFileWriteState OF
+    IDLE: 
+        FileWriteState := 'IDLE';
+    OPEN_FILE: 
+        FileWriteState := 'OPEN_FILE';
+    WRITE_TO_FILE: 
+        FileWriteState := 'WRITE_TO_FILE';
+    CLOSE_FILE: 
+        FileWriteState := 'CLOSE_FILE';
+    ERROR: 
+        FileWriteState := 'ERROR';
+ELSE
+    FileWriteState := 'UNKNOWN';
+END_CASE]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Init" Id="{eefdbfeb-6de0-4c9e-bca7-3ada7faf4662}">
+      <Declaration><![CDATA[METHOD PRIVATE Init ]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbFileClose(bExecute := FALSE);
+fbFileOpen(bExecute := FALSE);
+fbFilePuts(bExecute := FALSE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InsertToBuffer" Id="{d1cc2012-e617-4228-a52f-ddcc22d6a63d}">
+      <Declaration><![CDATA[METHOD PRIVATE InsertToBuffer 
+VAR_INPUT
+	value					: STRING;
+END_VAR
+VAR
+    nBufferIndex    : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nBufferIndex := 0 TO nArrBufferSize BY 1 DO
+    IF arrBuffer[nBufferIndex] = '' THEN
+        // We found the free spot in the buffer, insert the value to this place
+        arrBuffer[nBufferIndex] := value;
+        EXIT;
+    END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RotateBuffer" Id="{d626922d-400b-49f2-9da6-174abcfd43e4}">
+      <Declaration><![CDATA[METHOD PRIVATE RotateBuffer
+
+VAR
+    nIndex  : int := 0;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIndex := 0 TO nArrBufferSize - 1 BY 1 DO
+    // We can exit when we reached the empty slot in the buffer
+    IF arrBuffer[nIndex] = '' THEN
+        EXIT;
+    END_IF
+    // FIFO, removing first element in the array copying the next, etc...
+    arrBuffer[nIndex] := arrBuffer[nIndex+1];
+END_FOR
+arrBuffer[nArrBufferSize-1] := ''; // Clear the last element after rotation]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WriteToFile" Id="{06c32fea-3236-491d-81ca-2ba3d41d947c}">
+      <Declaration><![CDATA[METHOD PUBLIC WriteToFile
+VAR_INPUT
+    message : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InsertToBuffer(value := message);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_FileWriter">
+      <LineId Id="28" Count="58" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_FileWriter.FileWriteState.Get">
+      <LineId Id="5" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_FileWriter.Init">
+      <LineId Id="6" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_FileWriter.InsertToBuffer">
+      <LineId Id="24" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_FileWriter.RotateBuffer">
+      <LineId Id="23" Count="7" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_FileWriter.WriteToFile">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

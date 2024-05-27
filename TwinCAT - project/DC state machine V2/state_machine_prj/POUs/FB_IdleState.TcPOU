@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_IdleState" Id="{0a22dcc3-3bc6-4d93-9aca-a747ceef61e5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_IdleState IMPLEMENTS I_State
+VAR
+	pMachine				: POINTER TO FB_Machine; // Points to the state machine (THIS)
+	fVSensors				: ARRAY [0..1] OF REAL; 
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{89bc70d7-56d9-4f8e-a0cb-7e6c3581ccf8}">
+      <Declaration><![CDATA[METHOD PUBLIC Check 
+VAR
+	fInputVoltage			: REAL;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fVSensors := THIS^.pMachine^.VSensors;
+
+fInputVoltage := fVSensors[0];
+
+IF (fInputVoltage >= THIS^.pMachine^.LowerBoundV AND fInputVoltage <= THIS^.pMachine^.UpperBoundV) THEN
+	THIS^.pMachine^.Message := '[IDLE]The input voltage is within the boundaries.$0A NOW WAITING FOR ACKNOWLEDGEMENT TO ENTER PRE-CHARGE STATE.';
+ELSE
+	THIS^.pMachine^.Message := '[IDLE] The input voltage is NOT within the boundaries.$0A SYSTEM ENTERS DISCHARGE STATE.';
+	THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{4da43970-b44e-45d3-a26f-2725e415c36a}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{7741009e-cd74-45df-a568-2e1192ccf97c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'IDLE'; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{5a63751c-4592-4ced-9a19-79495be376cc}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{9cea9d2f-0f0c-4db1-a5b6-a232015beeb8}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton
+VAR
+	fInputVoltage			: REAL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fVSensors := THIS^.pMachine^.VSensors;
+fInputVoltage := fVSensors[0];
+
+IF (fInputVoltage >= THIS^.pMachine^.LowerBoundV AND fInputVoltage <= THIS^.pMachine^.UpperBoundV) THEN
+	THIS^.pMachine^.Message := '[IDLE] Acknowledge button has been pressed. $0A SYSTEM ENTERS PRECHARGE STATE.';
+	THIS^.pMachine^.SetState(THIS^.pMachine^.PrechargeState);
+	THIS^.StartTimer();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{9ca35365-8866-4214-9a30-90082ff5e02a}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[IDLE] Discharge button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{40dd2636-4e7b-4a6d-8829-9d305a0428d3}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[IDLE] Reset button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartTimer" Id="{91ecf8e2-0e79-4bd3-8d6b-f4591cb6472b}">
+      <Declaration><![CDATA[METHOD PUBLIC StartTimer]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.charge_TON.IN := TRUE; // Starts the Timer]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{e01351bb-71a2-4811-8728-ab7a48a35088}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.ErrorState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{c58b6810-c7e7-4af7-8e87-4db08a682ad7}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_IdleState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.Check">
+      <LineId Id="119" Count="1" />
+      <LineId Id="77" Count="2" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.PressButton">
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.PressDischarge">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.Reset">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.StartTimer">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_IdleState.TimerDone">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

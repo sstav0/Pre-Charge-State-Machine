@@ -1,0 +1,3686 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.56">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{2982B12D-8728-3DC7-15E9-7EFAACC33702}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..1] OF INT</Name>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{54195CC7-3340-E483-343B-EF7951C3211B}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..1] OF BOOL</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety" TcBaseType="true">FSOE_6</Name>
+			<BitSize>48</BitSize>
+			<SubItem>
+				<Name>FSoE CMD</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE Data</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000032}">BITARR8</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE CRC_0</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FSoE ConnID</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
+			<BitSize>6</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000010}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BYTE</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000004}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..3] OF BIT</Name>
+			<BitSize>4</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>4</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000008}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BYTE</Name>
+			<BitSize>8</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>1</Elements>
+			</ArrayInfo>
+		</DataType>
+	</DataTypes>
+	<ImageDatas>
+		<ImageData Id="1000">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000bfff00bfffc0c0c0808080c0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080c0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1001">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000120b0000120b00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff0000ff0000ff0000ff0000ff0000ff0000ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1002">424dd6020000000000003600000028000000100000000e0000000100180000000000a002000000000000000000000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff008066008099008066008099008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00000000ffff000000008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00000000ffff000000008066ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffffff000000ffffff0000008099ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff00ffff00ffff00ffff00ffff008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00000000ffff000000008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff0000ff00ffff0000ff008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff00000000ffff000000008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff99006666009999006666009999006666009900ffff00800000ffff008000008066ff00ffff00ffff00ffff00ffff00ff66009999006666009999006666009999006600ffff00ffff00ffff00ffff008099ff00ffff00ffff00ffff00ffff00ff</ImageData>
+		<ImageData Id="1003">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
+	</ImageDatas>
+	<Project ProjectGUID="{4CA5B5A6-6D43-4945-95D3-8B6B6A6E55B2}" TargetNetId="192.168.4.14.1.1" Target64Bit="true" AutoPrioManagement="true" ShowHideConfigurations="#x6">
+		<System>
+			<Settings>
+				<IoIdleTask Priority="8"/>
+			</Settings>
+			<Tasks>
+				<Task Id="5" Priority="6" CycleTime="50000" AmsPort="350" AdtTasks="true">
+					<Name>Safety</Name>
+				</Task>
+				<Task Id="6" Priority="4" CycleTime="10000" AmsPort="351" AdtTasks="true">
+					<Name>StateMachine</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{D09B1A18-6970-4CFE-A547-31FB42FC555B}" Name="safety" PrjFilePath="safety\safety.plcproj" TmcFilePath="safety\safety.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" TmcPath="safety\safety.tmc" TmcHash="{B7D54657-BB49-E96C-6124-EF56A6832E34}">
+					<Name>safety Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.b_SafetyState</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_ESTOPgen</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.b_Run</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_LED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_SafetyStateOut</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_ESTOPout</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2024-05-13T14:12:33">
+						<OwnerA Name="InputDst" Prefix="TIPC^safety^safety Instance" Type="1">
+							<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 5 (EL1004)">
+								<Link VarA="SafetyGVLs.b_SafetyState" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 2^Input" Size="1" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010050</OTCID>
+							</ManualConfig>
+							<Priority>6</Priority>
+							<CycleTime>5000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="6" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{8220D591-1DEA-4AEA-B31F-D2B0FE65F197}" Name="state_machine_prj" PrjFilePath="state_machine_prj\state_machine_prj.plcproj" TmcFilePath="state_machine_prj\state_machine_prj.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="state_machine_prj\state_machine_prj.tmc" TmcHash="{921D0886-95B6-F463-F209-1E7B94C2136C}">
+					<Name>state_machine_prj Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.b_reset</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_estop</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.n_V_sensors</Name>
+							<Comment><![CDATA[ defining 2 elements array of INT type as input to the PLC task]]></Comment>
+							<Type GUID="{2982B12D-8728-3DC7-15E9-7EFAACC33702}">ARRAY [0..1] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.n_A_sensors</Name>
+							<Type GUID="{2982B12D-8728-3DC7-15E9-7EFAACC33702}">ARRAY [0..1] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_main_contactors_fb</Name>
+							<Comment><![CDATA[ defining 4 elements array of BOOL type as input of feedback for the contactors to the PLC task]]></Comment>
+							<Type GUID="{54195CC7-3340-E483-343B-EF7951C3211B}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_bypass_contactors_fb</Name>
+							<Type GUID="{54195CC7-3340-E483-343B-EF7951C3211B}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_resetLed</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.b_main_contactors</Name>
+							<Comment><![CDATA[ defining 4 elements array of BOOL type as outpout to the PLC task]]></Comment>
+							<Type GUID="{54195CC7-3340-E483-343B-EF7951C3211B}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.b_bypass_contactors</Name>
+							<Type GUID="{54195CC7-3340-E483-343B-EF7951C3211B}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2024-05-14T15:35:23">
+						<OwnerA Name="InputDst" Prefix="TIPC^state_machine_prj^state_machine_prj Instance" Type="1">
+							<OwnerB Name="TIPC^safety^safety Instance">
+								<Link VarA="MAIN.b_resetPressed" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="PlcTask Outputs^MAIN.b_SafetyStateOut" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.b_stopPressed" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="PlcTask Outputs^MAIN.b_ESTOPout" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010060</OTCID>
+							</ManualConfig>
+							<Priority>4</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="4" OTCID="#x08502041"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Safety>
+			<Project GUID="{1BC8FD71-D805-4B31-9E5B-E864E653272B}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.splcProj" TmcFilePath="Untitled1\Untitled1.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010010" KeepUnrestoredLinks="2">
+					<Name>Untitled1 Instance</Name>
+					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
+						<Name>Safety</Name>
+						<InitSequence>PO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>1</Id>
+								<Name>Default</Name>
+							</Context>
+						</Contexts>
+					</TmcDesc>
+				</Instance>
+			</Project>
+		</Safety>
+		<Io>
+			<Device Id="5" DevType="111" DevFlags="#x0003" AmsPort="28677" AmsNetId="192.168.0.231.6.1" RemoteName="Device 5 (EtherCAT)" InfoImageId="5">
+				<Name>Device 5 (EtherCAT)</Name>
+				<AddressInfo>
+					<Pnp>
+						<DeviceDesc>Ethernet 2 (TwinCAT-Intel PCI Ethernet Adapter (Gig</DeviceDesc>
+						<DeviceName>\DEVICE\{794D9026-1F73-49ED-942E-A70C5F6C0322}</DeviceName>
+						<DeviceData>0001054001f9</DeviceData>
+					</Pnp>
+				</AddressInfo>
+				<Image Id="4" AddrType="9" ImageType="3">
+					<Name>Image</Name>
+				</Image>
+				<Image Id="1" AddrType="10" ImageType="3">
+					<Name>Image-2</Name>
+				</Image>
+				<Box Id="1" BoxType="9099">
+					<Name>Term 1 (EK1100)</Name>
+					<ImageId>1000</ImageId>
+					<EtherCAT SlaveType="1" PdiType="#x0d00" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x044c2c52" RevisionNo="#x00120000" PortPhys="305" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1100 EtherCAT Coupler (2A E-Bus)" Desc="EK1100" PortABoxInfo="#x00ffffff"/>
+					<Box Id="2" BoxType="9099">
+						<Name>Term 2 (EL3702)</Name>
+						<ImageId>33</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="1" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x01000001">
+							<SyncMan>001004002000010004000000000000000000001020010000</SyncMan>
+							<SyncMan>001404002000010004000000000000000000001420010000</SyncMan>
+							<SyncMan>980900000000000004000000000000000000980900040000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000060000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000001400010100000002000000060000000100000000000000</Fmmu>
+							<Fmmu>0000000000000000980900010000000002000000060000000200000000000000</Fmmu>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<DcData>3007000000000000f0d8ffff00000000ffffffff000100000000000000000000</DcData>
+							<DcMode>446353796e630000000000000000000032204368616e6e656c730000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0400000000000000010a1027000000000000000000000000000000000000001b0000001a0001011b0100801a0101</DcMode>
+							<DcMode>446353796e632d31000000000000000031204368616e6e656c000000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0200000000000000010a8813000000000000000000000000000000000000001b0000001a0001</DcMode>
+							<Pdo Name="Ch1 CycleCount" Index="#x1b00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Ch1 CycleCount" Index="#x6800" Sub="#x01">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 0" Index="#x1a00" Flags="#x0011" SyncMan="0" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6000" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 1" Index="#x1a01" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6010" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 2" Index="#x1a02" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6020" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 3" Index="#x1a03" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6030" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 4" Index="#x1a04" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6040" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6050" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6060" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6070" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6080" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6090" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 10" Index="#x1a0a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 11" Index="#x1a0b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 12" Index="#x1a0c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 13" Index="#x1a0d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 14" Index="#x1a0e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 15" Index="#x1a0f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 16" Index="#x1a10" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6100" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 17" Index="#x1a11" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6110" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 18" Index="#x1a12" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6120" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 19" Index="#x1a13" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6130" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 20" Index="#x1a14" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6140" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 21" Index="#x1a15" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6150" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 22" Index="#x1a16" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6160" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 23" Index="#x1a17" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6170" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 24" Index="#x1a18" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6180" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 25" Index="#x1a19" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6190" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 26" Index="#x1a1a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 27" Index="#x1a1b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 28" Index="#x1a1c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 29" Index="#x1a1d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 30" Index="#x1a1e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 31" Index="#x1a1f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 32" Index="#x1a20" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6200" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 33" Index="#x1a21" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6210" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 34" Index="#x1a22" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6220" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 35" Index="#x1a23" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6230" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 36" Index="#x1a24" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6240" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 37" Index="#x1a25" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6250" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 38" Index="#x1a26" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6260" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 39" Index="#x1a27" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6270" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 40" Index="#x1a28" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6280" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 41" Index="#x1a29" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6290" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 42" Index="#x1a2a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 43" Index="#x1a2b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 44" Index="#x1a2c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 45" Index="#x1a2d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 46" Index="#x1a2e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 47" Index="#x1a2f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 48" Index="#x1a30" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6300" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 49" Index="#x1a31" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6310" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 50" Index="#x1a32" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6320" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 51" Index="#x1a33" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6330" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 52" Index="#x1a34" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6340" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 53" Index="#x1a35" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6350" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 54" Index="#x1a36" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6360" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 55" Index="#x1a37" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6370" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 56" Index="#x1a38" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6380" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 57" Index="#x1a39" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6390" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 58" Index="#x1a3a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 59" Index="#x1a3b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 60" Index="#x1a3c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 61" Index="#x1a3d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 62" Index="#x1a3e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 63" Index="#x1a3f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 64" Index="#x1a40" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6400" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 65" Index="#x1a41" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6410" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 66" Index="#x1a42" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6420" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 67" Index="#x1a43" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6430" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 68" Index="#x1a44" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6440" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 69" Index="#x1a45" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6450" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 70" Index="#x1a46" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6460" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 71" Index="#x1a47" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6470" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 72" Index="#x1a48" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6480" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 73" Index="#x1a49" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6490" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 74" Index="#x1a4a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 75" Index="#x1a4b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 76" Index="#x1a4c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 77" Index="#x1a4d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 78" Index="#x1a4e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 79" Index="#x1a4f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 80" Index="#x1a50" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6500" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 81" Index="#x1a51" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6510" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 82" Index="#x1a52" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6520" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 83" Index="#x1a53" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6530" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 84" Index="#x1a54" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6540" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 85" Index="#x1a55" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6550" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 86" Index="#x1a56" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6560" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 87" Index="#x1a57" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6570" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 88" Index="#x1a58" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6580" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 89" Index="#x1a59" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6590" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 90" Index="#x1a5a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 91" Index="#x1a5b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 92" Index="#x1a5c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 93" Index="#x1a5d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 94" Index="#x1a5e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 95" Index="#x1a5f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 96" Index="#x1a60" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6600" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 97" Index="#x1a61" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6610" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 98" Index="#x1a62" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6620" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 99" Index="#x1a63" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6630" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011" SyncMan="1">
+								<Entry Name="Ch2 CycleCount" Index="#x6800" Sub="#x02">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" SyncMan="1" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6000" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6010" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6020" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6030" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6040" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6050" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6060" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6070" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6080" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6090" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 10" Index="#x1a8a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 11" Index="#x1a8b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 12" Index="#x1a8c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 13" Index="#x1a8d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 14" Index="#x1a8e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 15" Index="#x1a8f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 16" Index="#x1a90" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6100" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 17" Index="#x1a91" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6110" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 18" Index="#x1a92" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6120" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 19" Index="#x1a93" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6130" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 20" Index="#x1a94" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6140" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 21" Index="#x1a95" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6150" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 22" Index="#x1a96" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6160" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 23" Index="#x1a97" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6170" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 24" Index="#x1a98" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6180" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 25" Index="#x1a99" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6190" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 26" Index="#x1a9a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 27" Index="#x1a9b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 28" Index="#x1a9c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 29" Index="#x1a9d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 30" Index="#x1a9e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 31" Index="#x1a9f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 32" Index="#x1aa0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6200" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 33" Index="#x1aa1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6210" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 34" Index="#x1aa2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6220" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 35" Index="#x1aa3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6230" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 36" Index="#x1aa4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6240" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 37" Index="#x1aa5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6250" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 38" Index="#x1aa6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6260" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 39" Index="#x1aa7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6270" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 40" Index="#x1aa8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6280" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 41" Index="#x1aa9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6290" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 42" Index="#x1aaa" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 43" Index="#x1aab" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 44" Index="#x1aac" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 45" Index="#x1aad" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 46" Index="#x1aae" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 47" Index="#x1aaf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 48" Index="#x1ab0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6300" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 49" Index="#x1ab1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6310" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 50" Index="#x1ab2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6320" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 51" Index="#x1ab3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6330" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 52" Index="#x1ab4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6340" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 53" Index="#x1ab5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6350" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 54" Index="#x1ab6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6360" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 55" Index="#x1ab7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6370" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 56" Index="#x1ab8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6380" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 57" Index="#x1ab9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6390" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 58" Index="#x1aba" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 59" Index="#x1abb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 60" Index="#x1abc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 61" Index="#x1abd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 62" Index="#x1abe" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 63" Index="#x1abf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 64" Index="#x1ac0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6400" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 65" Index="#x1ac1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6410" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 66" Index="#x1ac2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6420" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 67" Index="#x1ac3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6430" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 68" Index="#x1ac4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6440" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 69" Index="#x1ac5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6450" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 70" Index="#x1ac6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6460" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 71" Index="#x1ac7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6470" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 72" Index="#x1ac8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6480" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 73" Index="#x1ac9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6490" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 74" Index="#x1aca" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 75" Index="#x1acb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 76" Index="#x1acc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 77" Index="#x1acd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 78" Index="#x1ace" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 79" Index="#x1acf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 80" Index="#x1ad0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6500" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 81" Index="#x1ad1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6510" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 82" Index="#x1ad2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6520" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 83" Index="#x1ad3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6530" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 84" Index="#x1ad4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6540" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 85" Index="#x1ad5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6550" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 86" Index="#x1ad6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6560" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 87" Index="#x1ad7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6570" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 88" Index="#x1ad8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6580" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 89" Index="#x1ad9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6590" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 90" Index="#x1ada" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 91" Index="#x1adb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 92" Index="#x1adc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 93" Index="#x1add" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 94" Index="#x1ade" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 95" Index="#x1adf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 96" Index="#x1ae0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6600" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 97" Index="#x1ae1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6610" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 98" Index="#x1ae2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6620" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 99" Index="#x1ae3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6630" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="NextSync1Time" Index="#x1b10" Flags="#x0030">
+								<Entry Name="StartTimeNextLatch" Index="#x1d09" Sub="#x98">
+									<Type>UDINT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="3" BoxType="9099">
+						<Name>Term 3 (EL3702)</Name>
+						<ImageId>33</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="1" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x01000002">
+							<SyncMan>001004002000010004000000000000000000001020010000</SyncMan>
+							<SyncMan>001404002000010004000000000000000000001420010000</SyncMan>
+							<SyncMan>980900000000000004000000000000000000980900040000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000060000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000001400010100000002000000060000000100000000000000</Fmmu>
+							<Fmmu>0000000000000000980900010000000002000000060000000200000000000000</Fmmu>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<DcData>3007000000000000f0d8ffff00000000ffffffff000100000000000000000000</DcData>
+							<DcMode>446353796e630000000000000000000032204368616e6e656c730000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0400000000000000010a1027000000000000000000000000000000000000001b0000001a0001011b0100801a0101</DcMode>
+							<DcMode>446353796e632d31000000000000000031204368616e6e656c000000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0200000000000000010a8813000000000000000000000000000000000000001b0000001a0001</DcMode>
+							<Pdo Name="Ch1 CycleCount" Index="#x1b00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Ch1 CycleCount" Index="#x6800" Sub="#x01">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 0" Index="#x1a00" Flags="#x0011" SyncMan="0" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6000" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 1" Index="#x1a01" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6010" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 2" Index="#x1a02" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6020" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 3" Index="#x1a03" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6030" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 4" Index="#x1a04" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6040" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6050" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6060" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6070" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6080" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6090" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 10" Index="#x1a0a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 11" Index="#x1a0b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 12" Index="#x1a0c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 13" Index="#x1a0d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 14" Index="#x1a0e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 15" Index="#x1a0f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 16" Index="#x1a10" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6100" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 17" Index="#x1a11" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6110" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 18" Index="#x1a12" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6120" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 19" Index="#x1a13" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6130" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 20" Index="#x1a14" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6140" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 21" Index="#x1a15" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6150" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 22" Index="#x1a16" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6160" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 23" Index="#x1a17" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6170" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 24" Index="#x1a18" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6180" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 25" Index="#x1a19" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6190" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 26" Index="#x1a1a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 27" Index="#x1a1b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 28" Index="#x1a1c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 29" Index="#x1a1d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 30" Index="#x1a1e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 31" Index="#x1a1f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 32" Index="#x1a20" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6200" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 33" Index="#x1a21" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6210" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 34" Index="#x1a22" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6220" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 35" Index="#x1a23" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6230" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 36" Index="#x1a24" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6240" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 37" Index="#x1a25" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6250" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 38" Index="#x1a26" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6260" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 39" Index="#x1a27" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6270" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 40" Index="#x1a28" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6280" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 41" Index="#x1a29" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6290" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 42" Index="#x1a2a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 43" Index="#x1a2b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 44" Index="#x1a2c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 45" Index="#x1a2d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 46" Index="#x1a2e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 47" Index="#x1a2f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 48" Index="#x1a30" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6300" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 49" Index="#x1a31" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6310" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 50" Index="#x1a32" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6320" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 51" Index="#x1a33" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6330" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 52" Index="#x1a34" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6340" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 53" Index="#x1a35" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6350" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 54" Index="#x1a36" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6360" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 55" Index="#x1a37" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6370" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 56" Index="#x1a38" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6380" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 57" Index="#x1a39" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6390" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 58" Index="#x1a3a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 59" Index="#x1a3b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 60" Index="#x1a3c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 61" Index="#x1a3d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 62" Index="#x1a3e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 63" Index="#x1a3f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 64" Index="#x1a40" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6400" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 65" Index="#x1a41" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6410" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 66" Index="#x1a42" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6420" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 67" Index="#x1a43" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6430" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 68" Index="#x1a44" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6440" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 69" Index="#x1a45" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6450" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 70" Index="#x1a46" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6460" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 71" Index="#x1a47" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6470" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 72" Index="#x1a48" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6480" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 73" Index="#x1a49" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6490" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 74" Index="#x1a4a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 75" Index="#x1a4b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 76" Index="#x1a4c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 77" Index="#x1a4d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 78" Index="#x1a4e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 79" Index="#x1a4f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 80" Index="#x1a50" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6500" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 81" Index="#x1a51" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6510" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 82" Index="#x1a52" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6520" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 83" Index="#x1a53" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6530" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 84" Index="#x1a54" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6540" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 85" Index="#x1a55" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6550" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 86" Index="#x1a56" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6560" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 87" Index="#x1a57" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6570" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 88" Index="#x1a58" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6580" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 89" Index="#x1a59" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6590" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 90" Index="#x1a5a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 91" Index="#x1a5b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 92" Index="#x1a5c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 93" Index="#x1a5d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 94" Index="#x1a5e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 95" Index="#x1a5f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 96" Index="#x1a60" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6600" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 97" Index="#x1a61" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6610" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 98" Index="#x1a62" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6620" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 99" Index="#x1a63" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6630" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011" SyncMan="1">
+								<Entry Name="Ch2 CycleCount" Index="#x6800" Sub="#x02">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" SyncMan="1" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6000" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6010" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6020" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6030" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6040" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6050" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6060" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6070" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6080" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6090" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 10" Index="#x1a8a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 11" Index="#x1a8b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 12" Index="#x1a8c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 13" Index="#x1a8d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 14" Index="#x1a8e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 15" Index="#x1a8f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 16" Index="#x1a90" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6100" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 17" Index="#x1a91" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6110" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 18" Index="#x1a92" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6120" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 19" Index="#x1a93" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6130" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 20" Index="#x1a94" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6140" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 21" Index="#x1a95" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6150" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 22" Index="#x1a96" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6160" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 23" Index="#x1a97" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6170" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 24" Index="#x1a98" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6180" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 25" Index="#x1a99" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6190" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 26" Index="#x1a9a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 27" Index="#x1a9b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 28" Index="#x1a9c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 29" Index="#x1a9d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 30" Index="#x1a9e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 31" Index="#x1a9f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 32" Index="#x1aa0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6200" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 33" Index="#x1aa1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6210" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 34" Index="#x1aa2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6220" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 35" Index="#x1aa3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6230" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 36" Index="#x1aa4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6240" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 37" Index="#x1aa5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6250" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 38" Index="#x1aa6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6260" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 39" Index="#x1aa7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6270" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 40" Index="#x1aa8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6280" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 41" Index="#x1aa9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6290" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 42" Index="#x1aaa" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 43" Index="#x1aab" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 44" Index="#x1aac" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 45" Index="#x1aad" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 46" Index="#x1aae" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 47" Index="#x1aaf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 48" Index="#x1ab0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6300" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 49" Index="#x1ab1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6310" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 50" Index="#x1ab2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6320" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 51" Index="#x1ab3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6330" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 52" Index="#x1ab4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6340" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 53" Index="#x1ab5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6350" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 54" Index="#x1ab6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6360" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 55" Index="#x1ab7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6370" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 56" Index="#x1ab8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6380" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 57" Index="#x1ab9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6390" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 58" Index="#x1aba" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 59" Index="#x1abb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 60" Index="#x1abc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 61" Index="#x1abd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 62" Index="#x1abe" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 63" Index="#x1abf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 64" Index="#x1ac0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6400" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 65" Index="#x1ac1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6410" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 66" Index="#x1ac2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6420" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 67" Index="#x1ac3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6430" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 68" Index="#x1ac4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6440" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 69" Index="#x1ac5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6450" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 70" Index="#x1ac6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6460" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 71" Index="#x1ac7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6470" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 72" Index="#x1ac8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6480" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 73" Index="#x1ac9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6490" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 74" Index="#x1aca" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 75" Index="#x1acb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 76" Index="#x1acc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 77" Index="#x1acd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 78" Index="#x1ace" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 79" Index="#x1acf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 80" Index="#x1ad0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6500" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 81" Index="#x1ad1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6510" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 82" Index="#x1ad2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6520" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 83" Index="#x1ad3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6530" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 84" Index="#x1ad4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6540" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 85" Index="#x1ad5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6550" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 86" Index="#x1ad6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6560" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 87" Index="#x1ad7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6570" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 88" Index="#x1ad8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6580" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 89" Index="#x1ad9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6590" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 90" Index="#x1ada" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 91" Index="#x1adb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 92" Index="#x1adc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 93" Index="#x1add" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 94" Index="#x1ade" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 95" Index="#x1adf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 96" Index="#x1ae0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6600" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 97" Index="#x1ae1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6610" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 98" Index="#x1ae2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6620" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 99" Index="#x1ae3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6630" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="NextSync1Time" Index="#x1b10" Flags="#x0030">
+								<Entry Name="StartTimeNextLatch" Index="#x1d09" Sub="#x98">
+									<Type>UDINT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="4" BoxType="9099">
+						<Name>Term 4 (EL3702)</Name>
+						<ImageId>33</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="1" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x01000003">
+							<SyncMan>001004002000010004000000000000000000001020010000</SyncMan>
+							<SyncMan>001404002000010004000000000000000000001420010000</SyncMan>
+							<SyncMan>980900000000000004000000000000000000980900040000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000060000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000001400010100000002000000060000000100000000000000</Fmmu>
+							<Fmmu>0000000000000000980900010000000002000000060000000200000000000000</Fmmu>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuName></SuName>
+							<DcData>3007000000000000f0d8ffff00000000ffffffff000100000000000000000000</DcData>
+							<DcMode>446353796e630000000000000000000032204368616e6e656c730000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0400000000000000010a1027000000000000000000000000000000000000001b0000001a0001011b0100801a0101</DcMode>
+							<DcMode>446353796e632d31000000000000000031204368616e6e656c000000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0200000000000000010a8813000000000000000000000000000000000000001b0000001a0001</DcMode>
+							<Pdo Name="Ch1 CycleCount" Index="#x1b00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Ch1 CycleCount" Index="#x6800" Sub="#x01">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 0" Index="#x1a00" Flags="#x0011" SyncMan="0" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6000" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 1" Index="#x1a01" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6010" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 2" Index="#x1a02" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6020" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 3" Index="#x1a03" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6030" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 4" Index="#x1a04" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6040" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6050" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6060" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6070" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6080" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6090" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 10" Index="#x1a0a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 11" Index="#x1a0b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 12" Index="#x1a0c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 13" Index="#x1a0d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 14" Index="#x1a0e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 15" Index="#x1a0f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x60f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 16" Index="#x1a10" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6100" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 17" Index="#x1a11" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6110" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 18" Index="#x1a12" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6120" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 19" Index="#x1a13" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6130" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 20" Index="#x1a14" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6140" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 21" Index="#x1a15" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6150" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 22" Index="#x1a16" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6160" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 23" Index="#x1a17" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6170" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 24" Index="#x1a18" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6180" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 25" Index="#x1a19" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6190" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 26" Index="#x1a1a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 27" Index="#x1a1b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 28" Index="#x1a1c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 29" Index="#x1a1d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 30" Index="#x1a1e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 31" Index="#x1a1f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x61f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 32" Index="#x1a20" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6200" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 33" Index="#x1a21" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6210" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 34" Index="#x1a22" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6220" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 35" Index="#x1a23" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6230" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 36" Index="#x1a24" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6240" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 37" Index="#x1a25" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6250" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 38" Index="#x1a26" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6260" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 39" Index="#x1a27" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6270" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 40" Index="#x1a28" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6280" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 41" Index="#x1a29" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6290" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 42" Index="#x1a2a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 43" Index="#x1a2b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 44" Index="#x1a2c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 45" Index="#x1a2d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 46" Index="#x1a2e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 47" Index="#x1a2f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x62f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 48" Index="#x1a30" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6300" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 49" Index="#x1a31" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6310" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 50" Index="#x1a32" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6320" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 51" Index="#x1a33" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6330" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 52" Index="#x1a34" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6340" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 53" Index="#x1a35" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6350" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 54" Index="#x1a36" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6360" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 55" Index="#x1a37" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6370" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 56" Index="#x1a38" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6380" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 57" Index="#x1a39" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6390" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 58" Index="#x1a3a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 59" Index="#x1a3b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 60" Index="#x1a3c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 61" Index="#x1a3d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 62" Index="#x1a3e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 63" Index="#x1a3f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x63f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 64" Index="#x1a40" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6400" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 65" Index="#x1a41" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6410" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 66" Index="#x1a42" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6420" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 67" Index="#x1a43" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6430" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 68" Index="#x1a44" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6440" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 69" Index="#x1a45" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6450" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 70" Index="#x1a46" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6460" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 71" Index="#x1a47" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6470" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 72" Index="#x1a48" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6480" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 73" Index="#x1a49" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6490" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 74" Index="#x1a4a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 75" Index="#x1a4b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 76" Index="#x1a4c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 77" Index="#x1a4d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 78" Index="#x1a4e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 79" Index="#x1a4f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x64f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 80" Index="#x1a50" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6500" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 81" Index="#x1a51" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6510" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 82" Index="#x1a52" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6520" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 83" Index="#x1a53" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6530" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 84" Index="#x1a54" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6540" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 85" Index="#x1a55" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6550" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 86" Index="#x1a56" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6560" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 87" Index="#x1a57" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6570" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 88" Index="#x1a58" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6580" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 89" Index="#x1a59" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6590" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 90" Index="#x1a5a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65a0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 91" Index="#x1a5b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65b0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 92" Index="#x1a5c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65c0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 93" Index="#x1a5d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65d0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 94" Index="#x1a5e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65e0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 95" Index="#x1a5f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x65f0" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 96" Index="#x1a60" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6600" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 97" Index="#x1a61" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6610" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 98" Index="#x1a62" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6620" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch1 Sample 99" Index="#x1a63" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch1 Value" Index="#x6630" Sub="#x01" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011" SyncMan="1">
+								<Entry Name="Ch2 CycleCount" Index="#x6800" Sub="#x02">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" SyncMan="1" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6000" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6010" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6020" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6030" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6040" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6050" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6060" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6070" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6080" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6090" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 10" Index="#x1a8a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 11" Index="#x1a8b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 12" Index="#x1a8c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 13" Index="#x1a8d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 14" Index="#x1a8e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 15" Index="#x1a8f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x60f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 16" Index="#x1a90" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6100" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 17" Index="#x1a91" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6110" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 18" Index="#x1a92" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6120" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 19" Index="#x1a93" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6130" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 20" Index="#x1a94" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6140" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 21" Index="#x1a95" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6150" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 22" Index="#x1a96" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6160" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 23" Index="#x1a97" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6170" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 24" Index="#x1a98" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6180" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 25" Index="#x1a99" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6190" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 26" Index="#x1a9a" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 27" Index="#x1a9b" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 28" Index="#x1a9c" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 29" Index="#x1a9d" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 30" Index="#x1a9e" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 31" Index="#x1a9f" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x61f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 32" Index="#x1aa0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6200" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 33" Index="#x1aa1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6210" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 34" Index="#x1aa2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6220" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 35" Index="#x1aa3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6230" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 36" Index="#x1aa4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6240" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 37" Index="#x1aa5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6250" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 38" Index="#x1aa6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6260" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 39" Index="#x1aa7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6270" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 40" Index="#x1aa8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6280" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 41" Index="#x1aa9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6290" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 42" Index="#x1aaa" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 43" Index="#x1aab" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 44" Index="#x1aac" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 45" Index="#x1aad" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 46" Index="#x1aae" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 47" Index="#x1aaf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x62f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 48" Index="#x1ab0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6300" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 49" Index="#x1ab1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6310" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 50" Index="#x1ab2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6320" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 51" Index="#x1ab3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6330" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 52" Index="#x1ab4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6340" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 53" Index="#x1ab5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6350" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 54" Index="#x1ab6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6360" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 55" Index="#x1ab7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6370" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 56" Index="#x1ab8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6380" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 57" Index="#x1ab9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6390" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 58" Index="#x1aba" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 59" Index="#x1abb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 60" Index="#x1abc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 61" Index="#x1abd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 62" Index="#x1abe" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 63" Index="#x1abf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x63f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 64" Index="#x1ac0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6400" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 65" Index="#x1ac1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6410" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 66" Index="#x1ac2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6420" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 67" Index="#x1ac3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6430" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 68" Index="#x1ac4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6440" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 69" Index="#x1ac5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6450" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 70" Index="#x1ac6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6460" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 71" Index="#x1ac7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6470" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 72" Index="#x1ac8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6480" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 73" Index="#x1ac9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6490" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 74" Index="#x1aca" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 75" Index="#x1acb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 76" Index="#x1acc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 77" Index="#x1acd" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 78" Index="#x1ace" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 79" Index="#x1acf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x64f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 80" Index="#x1ad0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6500" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 81" Index="#x1ad1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6510" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 82" Index="#x1ad2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6520" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 83" Index="#x1ad3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6530" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 84" Index="#x1ad4" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6540" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 85" Index="#x1ad5" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6550" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 86" Index="#x1ad6" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6560" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 87" Index="#x1ad7" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6570" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 88" Index="#x1ad8" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6580" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 89" Index="#x1ad9" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6590" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 90" Index="#x1ada" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65a0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 91" Index="#x1adb" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65b0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 92" Index="#x1adc" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65c0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 93" Index="#x1add" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65d0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 94" Index="#x1ade" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65e0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 95" Index="#x1adf" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x65f0" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 96" Index="#x1ae0" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6600" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 97" Index="#x1ae1" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6610" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 98" Index="#x1ae2" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6620" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Ch2 Sample 99" Index="#x1ae3" Flags="#x0014" OverSampleInc="16">
+								<Entry Name="Ch2 Value" Index="#x6630" Sub="#x02" Flags="#x00010000">
+									<Type>INT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="NextSync1Time" Index="#x1b10" Flags="#x0030">
+								<Entry Name="StartTimeNextLatch" Index="#x1d09" Sub="#x98">
+									<Type>UDINT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="5" BoxType="9099">
+						<Name>Term 5 (EL1004)</Name>
+						<ImageId>7</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03ec3052" RevisionNo="#x00130000" RepeatSupport="true" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1004 4Ch. Dig. Input 24V, 3ms" Desc="EL1004" PortABoxInfo="#x01000004">
+							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
+							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6010" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6020" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6030" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="6" BoxType="9099">
+						<Name>Term 6 (EL1004)</Name>
+						<ImageId>7</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x03ec3052" RevisionNo="#x00130000" RepeatSupport="true" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL1004 4Ch. Dig. Input 24V, 3ms" Desc="EL1004" PortABoxInfo="#x01000005">
+							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
+							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
+							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6010" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6020" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
+								<Entry Name="Input" Index="#x6030" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="7" BoxType="9099">
+						<Name>Term 7 (EL2004)</Name>
+						<ImageId>1001</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d43052" RevisionNo="#x00100000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2004 4Ch. Dig. Output 24V, 0.5A" Desc="EL2004" PortABoxInfo="#x01000006">
+							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
+							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
+							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7010" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7020" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7030" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="8" BoxType="9099">
+						<Name>Term 8 (EL2004)</Name>
+						<ImageId>1001</ImageId>
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d43052" RevisionNo="#x00100000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2004 4Ch. Dig. Output 24V, 0.5A" Desc="EL2004" PortABoxInfo="#x01000007">
+							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
+							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
+							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7010" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7020" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
+								<Entry Name="Output" Index="#x7030" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+							</Pdo>
+						</EtherCAT>
+					</Box>
+					<Box Id="9" BoxType="9099" BoxFlags="#x00000020">
+						<Name>Term 9 (EL6910)</Name>
+						<ImageId>1002</ImageId>
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x1afe3052" RevisionNo="#x00120000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL6910, TwinSAFE PLC" Desc="EL6910" PortABoxInfo="#x01000008">
+							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
+							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
+							<SyncMan>001209002400010003000000000000000200001224010000</SyncMan>
+							<SyncMan>001d09002000010004000000000000000200001d20010000</SyncMan>
+							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
+							<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
+							<Fmmu>0000000000000000001200020100000001000000060000000200000000000000</Fmmu>
+							<Fmmu>0000000000000000001d00010100000002000000060000000300000000000000</Fmmu>
+							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000000000020000000001000000060000000400010000000000</Fmmu>
+							<Fmmu>0000000000000000000000010000000002000000060000000500010000000000</Fmmu>
+							<BootStrapData>0010f400f410f400</BootStrapData>
+							<MBoxUserCmdData>004003000a00000000000000030010000000000000000000000000000000000020f3100502000000010000</MBoxUserCmdData>
+							<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
+								<Entry Name="Message_3 TxPDO" Index="#x7000" Sub="#x01">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="Message_3 RxPDO" Index="#x6000" Sub="#x01">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="StandardInputs" Index="#x1bf0" Flags="#x2011" SyncMan="3">
+								<Entry Name="Standard Out Var 4" Index="#x7000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 5" Index="#x7000" Sub="#x02">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="Standard In Var 1" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard In Var 2" Index="#x6000" Sub="#x02">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0011" SyncMan="3">
+								<Entry Name="Safe Logic State" Index="#xf100" Sub="#x01">
+									<Type>USINT</Type>
+								</Entry>
+								<Entry Name="Cycle Counter" Index="#xf100" Sub="#x02">
+									<Type>USINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="FSLOGIC Outputs" Index="#x17ff" InOut="1" Flags="#x0011" SyncMan="2">
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000010}">ARRAY [0..1] OF BYTE</Type>
+								</Entry>
+							</Pdo>
+							<CoeProfile ProfileNo="5001"/>
+						</EtherCAT>
+					</Box>
+					<Box Id="10" BoxType="9099" BoxFlags="#x00000020">
+						<Name>Term 10 (EL1904)</Name>
+						<ImageId>118</ImageId>
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x07703052" RevisionNo="#x00120000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="1" Type="EL1904, 4 Ch. Safety Input 24V, TwinSAFE" Desc="EL1904" PortABoxInfo="#x01000009">
+							<SyncMan>001000012600010001000000400000010001001026010000</SyncMan>
+							<SyncMan>001100012200010002000000400000010001001122010000</SyncMan>
+							<SyncMan>001206002400010003000000000000000600001224010000</SyncMan>
+							<SyncMan>001906002000010004000000000000000600001920010000</SyncMan>
+							<Fmmu>0000000000000000001200020100000001000000000000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000001900010100000002000000000000000000000000000000</Fmmu>
+							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+							<BootStrapData>0010f400f410f400</BootStrapData>
+							<Pdo Name="TxPDO" Index="#x1a00" Flags="#x0090" SyncMan="3">
+								<Entry Name="FSOE__FSoE Slave CMD" Index="#x6000" Sub="#x01" Flags="#x00008020">
+									<Type>USINT</Type>
+								</Entry>
+								<Entry Name="FSOE__InputChannel1" Index="#x6001" Sub="#x01" Flags="#x00008020">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="FSOE__InputChannel2" Index="#x6001" Sub="#x02" Flags="#x00008020">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="FSOE__InputChannel3" Index="#x6001" Sub="#x03" Flags="#x00008020">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="FSOE__InputChannel4" Index="#x6001" Sub="#x04" Flags="#x00008020">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="FSOE__">
+									<Type GUID="{18071995-0000-0000-0000-002000000004}">ARRAY [0..3] OF BIT</Type>
+								</Entry>
+								<Entry Name="FSOE__FSoE Slave CRC_0" Index="#x6000" Sub="#x03">
+									<Type>UINT</Type>
+								</Entry>
+								<Entry Name="FSOE__FSoE Slave ConnID" Index="#x6000" Sub="#x02">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="RxPDO" Index="#x1600" InOut="1" Flags="#x0090" SyncMan="2">
+								<Entry Name="FSOE__FSoE Master CMD" Index="#x7000" Sub="#x01">
+									<Type>USINT</Type>
+								</Entry>
+								<Entry Name="FSOE__">
+									<Type GUID="{18071995-0000-0000-0000-002000000008}">ARRAY [0..0] OF BYTE</Type>
+								</Entry>
+								<Entry Name="FSOE__FSoE Master CRC_0" Index="#x7000" Sub="#x03">
+									<Type>UINT</Type>
+								</Entry>
+								<Entry Name="FSOE__FSoE Master ConnID" Index="#x7000" Sub="#x02">
+									<Type>UINT</Type>
+								</Entry>
+							</Pdo>
+							<CoeProfile ProfileNo="5001"/>
+							<Slot Name="">
+								<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
+								<ModuleIdent>190</ModuleIdent>
+								<Module Id="#x03090001" Type="FSOES" Class="190">
+									<Name>Module 1 (FSOES)</Name>
+									<ImageId>118</ImageId>
+									<ModuleData>02000000be00000000000c000000000000000000000000000000000000000000</ModuleData>
+									<PdoIndex>6656</PdoIndex>
+									<PdoIndex>5632</PdoIndex>
+									<CoeProfile ProfileNo="#x00001389"/>
+								</Module>
+							</Slot>
+						</EtherCAT>
+					</Box>
+					<Box Id="12" BoxType="9099">
+						<Name>Term 12 (EL9011)</Name>
+						<ImageId>1003</ImageId>
+						<EtherCAT CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x23333050" InfoDataState="false" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9011 End Terminal" Desc="EL9011" PortABoxInfo="#x0100000a"/>
+					</Box>
+				</Box>
+				<EtherCAT DcSyncMode="3"/>
+			</Device>
+		</Io>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500811000403}" Id="#x02030030"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500840000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502041-2001-0850-4020-500800205008}" Id="#x02030040" Watchdog="14000000040000000400000004000000"/>
+		<OwnerA Name="TIID^Device 5 (EtherCAT)">
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 10 (EL1904)">
+				<Link VarA="Term 1 (EK1100)^Term 9 (EL6910)^ConnectionOutputs^Message_3 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 5 (EL1004)">
+				<Link VarA="Term 1 (EK1100)^Term 9 (EL6910)^StandardOutputs^Standard In Var 1" VarB="Channel 2^Input"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 9 (EL6910)">
+				<Link VarA="Term 1 (EK1100)^Term 10 (EL1904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="ConnectionInputs^Message_3 TxPDO"/>
+			</OwnerB>
+		</OwnerA>
+		<OwnerA Name="TIPC^safety^safety Instance">
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 8 (EL2004)">
+				<Link VarA="PlcTask Outputs^MAIN.b_LED" VarB="Channel 2^Output"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 9 (EL6910)">
+				<Link VarA="PlcTask Inputs^MAIN.b_ESTOPgen" VarB="StandardInputs^Standard Out Var 5"/>
+				<Link VarA="PlcTask Inputs^MAIN.b_SafetyState" VarB="StandardInputs^Standard Out Var 4"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_Run" VarB="StandardOutputs^Standard In Var 2"/>
+			</OwnerB>
+			<OwnerB Name="TIPC^state_machine_prj^state_machine_prj Instance">
+				<Link VarA="PlcTask Outputs^MAIN.b_ESTOPout" VarB="PlcTask Inputs^MAIN.b_estop"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_LED" VarB="PlcTask Inputs^MAIN.b_resetLed"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_SafetyStateOut" VarB="PlcTask Inputs^MAIN.b_reset"/>
+			</OwnerB>
+		</OwnerA>
+		<OwnerA Name="TIPC^state_machine_prj^state_machine_prj Instance">
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 2 (EL3702)">
+				<Link VarA="PlcTask Inputs^MAIN.n_A_sensors[0]" VarB="Ch2 Sample 0^Ch2 Value"/>
+				<Link VarA="PlcTask Inputs^MAIN.n_A_sensors[1]" VarB="Ch1 Sample 0^Ch1 Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 4 (EL3702)">
+				<Link VarA="PlcTask Inputs^MAIN.n_V_sensors[0]" VarB="Ch1 Sample 0^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^MAIN.n_V_sensors[1]" VarB="Ch2 Sample 0^Ch2 Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 6 (EL1004)">
+				<Link VarA="PlcTask Inputs^MAIN.b_bypass_contactors_fb[0]" VarB="Channel 3^Input"/>
+				<Link VarA="PlcTask Inputs^MAIN.b_bypass_contactors_fb[1]" VarB="Channel 4^Input"/>
+				<Link VarA="PlcTask Inputs^MAIN.b_main_contactors_fb[0]" VarB="Channel 1^Input"/>
+				<Link VarA="PlcTask Inputs^MAIN.b_main_contactors_fb[1]" VarB="Channel 2^Input"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 1 (EK1100)^Term 7 (EL2004)">
+				<Link VarA="PlcTask Outputs^MAIN.b_bypass_contactors[0]" VarB="Channel 3^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_bypass_contactors[1]" VarB="Channel 4^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_main_contactors[0]" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.b_main_contactors[1]" VarB="Channel 2^Output"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmProject>

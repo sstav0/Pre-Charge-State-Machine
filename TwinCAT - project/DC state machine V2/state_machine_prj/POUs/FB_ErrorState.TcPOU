@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_ErrorState" Id="{3bd6edf8-9c55-4d99-bb9c-5733c675ad2b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_ErrorState IMPLEMENTS I_State
+VAR
+	pMachine 			: POINTER TO FB_MACHINE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{18a76895-891c-46c4-9487-96ee095848a3}">
+      <Declaration><![CDATA[METHOD PUBLIC Check
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ResetContactors();
+THIS^.ResetTimer();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{6c4618e2-c37c-426d-b181-27b2e932bd77}">
+      <Declaration><![CDATA[PROPERTY Description : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{20bf90f8-44dd-46b4-9988-868820b5b162}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'ERROR';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{3a331c39-76aa-4ddd-9ff8-92c2148a6774}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	pMachine : POINTER TO FB_MACHINE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{7331e6e2-e84f-4f11-be2c-061ff44361dd}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{e9c3d438-35f9-4640-8bda-eb6be60a5be5}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{f6eab5b7-2715-4b49-8c8c-4676f5372220}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.DisconnectedState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetContactors" Id="{90578b5a-f601-4b5e-95d8-9d801b8df047}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetContactors
+VAR
+	nIdx					: INT := 0; 
+	bBypassContactors		: ARRAY[0..1] OF BOOL; 
+	bMainContactors			: ARRAY[0..1] OF BOOL; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 BY 1 DO 
+	bBypassContactors[nIdx] := FALSE;
+	bMainContactors[nIdx] := FALSE; 
+END_FOR
+
+THIS^.pMachine^.BypassContactors := bBypassContactors; // Reset every contactor 
+THIS^.pMachine^.MainContactors := bMainContactors; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetTimer" Id="{efa99194-c307-4935-a5b5-d33cb2102d16}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetTimer
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.charge_TON.IN := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{ae111b00-ee49-4409-b4b1-c240c73646e8}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{a5dd5c99-c1e0-4112-8364-4fb70dfcbe7b}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ErrorState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.Check">
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.PressButton">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.PressDischarge">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.Reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.ResetContactors">
+      <LineId Id="4" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.ResetTimer">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ErrorState.TimerDone">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

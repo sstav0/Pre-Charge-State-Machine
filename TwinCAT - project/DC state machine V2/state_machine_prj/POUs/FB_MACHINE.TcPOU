@@ -1,0 +1,728 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_MACHINE" Id="{e9add64e-a043-4b63-bb79-9b2caff2c076}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC FB_MACHINE
+
+VAR_INPUT
+	nVSensors 		 				: ARRAY[0..1] OF INT; // 2 INT elements array which contains the voltage sensors outputs
+	nASensors 						: ARRAY[0..1] OF INT; // 2 INT elements array whihch contains the current sensors outputs
+	
+	(* Pre-Charge Timer *) 
+	tMaxTime						: TIME; // Maximum pre-charge time
+	
+	(* Voltage boundaries *) 
+	nLowerBoundV					: INT; // Input voltage lower bound (~50V) 
+	nUpperBoundV					: INT; // Input voltage upper bound (~200V)
+	nMinV							: INT; // Minimum voltage to leave "disconnected" state
+	
+	(* Timer *)
+	charge_TON						: TON; 
+END_VAR
+
+VAR_OUTPUT
+	ipState 						: I_State := fbDisconnectedState; // Current State of the state machine (default is FB_DisconnectedState)
+END_VAR
+
+VAR (* Internal variables *)
+	fbDisconnectedState 			: FB_DisconnectedState(THIS);	
+	fbIdleState 					: FB_IdleState(THIS); 
+	fbPrechargeState 				: FB_PrechargeState(THIS); 
+	fbChargedState					: FB_ChargedState(THIS); 
+	fbDischargeState				: FB_DischargeState(THIS);
+	fbErrorState					: FB_ErrorState(THIS);
+	
+	(* Sensors scaling *) 
+	n_idx_1 						: INT := 0; 
+	fVSensorsScaled 				: ARRAY[0..1] OF REAL; // defining 2 elements array of REAL type as internal variables
+	fASensorsScaled 				: ARRAY[0..1] OF REAL; 
+	
+	(* Message log *) 
+	sLog 							: ARRAY [0..19] OF STRING(600);
+	nCount							: UINT := 0; // Keeps track of the number of elements in the array	
+	nArraySize 						: UINT := 20; // Edit value if size of sLog changes 
+	tLaunchTime 					: TIME; 	
+	sMessage						: STRING(600);
+	sPrevMessage					: STRING(600);
+	
+	(* Contactors *)
+	bMainContactors					: ARRAY[0..1] OF BOOL; 
+	bBypassContactors 				: ARRAY[0..1] OF BOOL; 
+	
+	(* Contactors feedback *)
+	bMainContactorsFB				: ARRAY[0..1] OF BOOL; // defining 2 elements array of BOOL type as input of feedback for the main contactors to the PLC task
+	bBypassContactorsFB				: ARRAY[0..1] OF BOOL; // defining 2 elements array of BOOL type as input of feedback for the precharge contactors to the PLC task
+
+	(* Triggers *) 
+	rtrigButtonAck					: R_TRIG; // Define trigger for user button 
+	rtrigButtonDisch				: R_TRIG; 
+	
+	(* Misc *) 
+	nRunCounter						: UINT := 10;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tLaunchTime := TIME(); // Reference point for log messages]]></ST>
+    </Implementation>
+    <Method Name="AddToLog" Id="{ac274186-95b7-4760-afe7-39577b44e887}">
+      <Declaration><![CDATA[METHOD PRIVATE AddToLog
+VAR_INPUT
+	sMsgINPUT			: STRING(600); //different from Message that doesn't contain the time tag
+END_VAR
+VAR
+	nIdx 				: UINT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// IF the ARRAY is full, remove the first element 
+IF NOT(Message = PrevMessage) THEN // NOT sMsgINPUT BECAUSE IT CONTAINS THE TIME TAG which will make it always different from PrevMessage
+	IF THIS^.nCount = THIS^.nArraySize THEN
+		FOR nIdx := 0 TO THIS^.nArraySize - 2 DO 
+			sLog[nIdx] := sLog[nIdx + 1 ]; // shift the whole array
+		END_FOR
+		sLog[THIS^.nCount - 1] := sMsgINPUT; // Add the new string as the last elemnt of the array
+	ELSE
+		sLog[THIS^.nCount] := sMsgINPUT;
+		THIS^.nCount := THIS^.nCount + 1;
+	END_IF 
+	THIS^.PrevMessage := Message;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ASensors" Id="{b6faa332-c7af-4d3a-b8bd-92c909e5df21}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ASensors : ARRAY[0..1] OF REAL]]></Declaration>
+      <Get Name="Get" Id="{8e8ceb79-9be4-420a-8844-7dc31d542a05}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ASensors := THIS^.fASensorsScaled;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="BypassContactors" Id="{d2af3c93-d027-43f3-a42c-72613bd8cc7c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC BypassContactors : ARRAY[0..1] OF BOOL]]></Declaration>
+      <Get Name="Get" Id="{28947c24-b593-4e9b-bae2-0479c93e5ae6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BypassContactors := THIS^.bBypassContactors; ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7971e048-1741-436b-a82f-db6c3e6248d0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.bBypassContactors := BypassContactors; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="BypassContactorsFB" Id="{0410ed7f-272e-4bfe-866c-4991bccc1f10}">
+      <Declaration><![CDATA[PROPERTY PRIVATE BypassContactorsFB : ARRAY[0..1] OF BOOL]]></Declaration>
+      <Get Name="Get" Id="{fe865ef5-3d53-43b0-a226-f839103bf7c2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BypassContactorsFB := THIS^.bBypassContactorsFB;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6d9c31b8-dbfb-41e2-ad8c-67e6ba29ec19}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.bBypassContactorsFB := BypassContactorsFB;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ChargedState" Id="{43ec25d7-3afc-4f9e-a502-2ff015fd13cd}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ChargedState : I_State]]></Declaration>
+      <Get Name="Get" Id="{388a3ab3-9c98-406d-a797-c85cb6df8205}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ChargedState := THIS^.fbChargedState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CheckContactors" Id="{527a9ed5-0321-4111-9940-9b8d6cdeaeeb}">
+      <Declaration><![CDATA[METHOD CheckContactors
+VAR
+	nIdx							: INT := 0; 
+	
+	bMainContactorsCheck 			: BOOL := TRUE; // true means that there is no problem
+	bBypassContactorsCheck 			: BOOL := TRUE; 
+	bConclusion 					: BOOL := TRUE; // true means that there is no problem
+	
+	fbDischargeState				: FB_DischargeState(THIS);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 DO 
+	bMainContactorsCheck := THIS^.bMainContactors[nIdx] = THIS^.bMainContactorsFB[nIdx]; // checks that the feedback signal corresponds to the contactor state
+	bBypassContactorsCheck := THIS^.bBypassContactors[nIdx] = THIS^.bBypassContactorsFB[nIdx];
+	
+	IF NOT(bMainContactorsCheck) THEN
+		THIS^.Message := CONCAT('[CheckContactors] The ', CONCAT(INT_TO_STRING(nIdx), ' Main contactor state does not match the signal sent'));
+		bConclusion := FALSE; 
+	END_IF
+	IF NOT(bBypassContactorsCheck) THEN
+		THIS^.Message := CONCAT('[CheckContactors] The ', CONCAT(INT_TO_STRING(nIdx), ' Bypass contactor state does not match the signal sent'));
+		bConclusion := FALSE; 
+	END_IF
+END_FOR 
+
+IF NOT(bConclusion) THEN
+	THIS^.Message := CONCAT(THIS^.Message, '[CheckContactors]$A0 THE SYSTEM IS NOW BEING DISHCARGED');  
+	THIS^.SetState(fbDischargeState);
+	bConclusion := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="DischargeState" Id="{173ac877-0e82-4c6a-ac97-d7e06ad23222}">
+      <Declaration><![CDATA[PROPERTY PUBLIC DischargeState : I_State]]></Declaration>
+      <Get Name="Get" Id="{5891132f-7c43-4f66-988f-99d51574158b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DischargeState :=  THIS^.fbDischargeState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="DisconnectedState" Id="{56de3cd8-90ec-4d59-9c02-fd187f34eb60}">
+      <Declaration><![CDATA[PROPERTY PUBLIC DisconnectedState : I_State]]></Declaration>
+      <Get Name="Get" Id="{36ba4c7f-a521-445b-b488-3d6ea0731d95}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DisconnectedState := THIS^.fbDisconnectedState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorState" Id="{f329acb5-d313-41fe-b78e-27249ba4ceb1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ErrorState : I_State]]></Declaration>
+      <Get Name="Get" Id="{84712abd-7125-43fa-96ad-ec38ce7223f7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrorState := THIS^.fbErrorState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{ced91f50-40e9-4817-86bf-d2782065c563}">
+      <Declaration><![CDATA[METHOD FB_init 
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	(* Pre-Charge Timer *) 
+	tMaxTime						: TIME; 
+	
+	(* Voltage boundaries *) 
+	nLowerBoundV					: INT; // Input voltage lower bound (~50V) 
+	nUpperBoundV					: INT; // Input voltage upper bound (~200V)
+	nMinV							: INT; // Minimum voltage to leave "disconnected" state
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.tMaxTime := tMaxTime;
+THIS^.nLowerBoundV := nLowerBoundV; 
+THIS^.nUpperBoundV := nUpperBoundV; 
+THIS^.nMinV := nMinV; ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IdleState" Id="{7a61cc62-a74b-4e48-ae41-8317a85c412c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC IdleState : I_State]]></Declaration>
+      <Get Name="Get" Id="{c76052d9-cc2e-40e1-90d9-9aa80f1659a8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IdleState := THIS^.fbIdleState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Logs" Id="{ab004129-c037-4a86-bcff-b2f404b8e338}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Logs : ARRAY[0..19] OF STRING(600)]]></Declaration>
+      <Get Name="Get" Id="{0900234e-1140-4bbe-b12e-ca94b6494143}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Logs := THIS^.sLog;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LowerBoundV" Id="{b2a39e6d-ccb7-4269-82a6-2474548fdcc2}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LowerBoundV : INT]]></Declaration>
+      <Get Name="Get" Id="{5dd035b8-8c08-4292-a9be-7aef22e12b1b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LowerBoundV := THIS^.nLowerBoundV; ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{da5bf24f-7a26-4b76-a02f-dbfce8999af9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.nLowerBoundV := LowerBoundV; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="MainContactors" Id="{5db73b65-d4c0-4d16-a6af-6c694cb38285}">
+      <Declaration><![CDATA[PROPERTY PUBLIC MainContactors : ARRAY[0..1] OF BOOL]]></Declaration>
+      <Get Name="Get" Id="{ae768569-9f05-4a8f-8c30-82890edb731e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MainContactors := THIS^.bMainContactors; ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{cd0121ad-7a22-4568-9620-327dbaa79f98}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.bMainContactors := MainContactors;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="MainContactorsFB" Id="{e321eaa2-fe47-42a5-b403-1c02622f811a}">
+      <Declaration><![CDATA[PROPERTY PRIVATE MainContactorsFB : ARRAY[0..1] OF BOOL]]></Declaration>
+      <Get Name="Get" Id="{d031eb2f-200d-4b04-83f6-587c29c94dd2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MainContactorsFB := THIS^.bMainContactorsFB;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4f60de6b-beee-4be1-ad9e-4202aab17510}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.bMainContactorsFB := MainContactorsFB;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Message" Id="{33147aad-9b42-4325-9d8a-42864c0cc183}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Message : STRING(600)]]></Declaration>
+      <Get Name="Get" Id="{c1adc8e6-cc77-40f2-9582-c85846dc2042}">
+        <Declaration><![CDATA[PUBLIC
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Message := THIS^.sMessage;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e599ee8f-18b5-45fb-bb34-cae3a9157614}">
+        <Declaration><![CDATA[PUBLIC
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.sMessage := Message; 
+// Adds the difference between the laucnh time and the current time at the beginning of the log message
+THIS^.AddToLog(CONCAT(CONCAT(CONCAT('[', TIME_TO_STRING(TIME()-THIS^.tLaunchTime)), '] '), THIS^.sMessage)); ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="MinV" Id="{fe12bda5-b9a7-4f22-9742-12b1296e93ce}">
+      <Declaration><![CDATA[PROPERTY PUBLIC MinV : INT]]></Declaration>
+      <Get Name="Get" Id="{5231160c-f40a-4aad-b2d8-431702e4e94e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MinV := THIS^.nMinV; ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{91f8ef05-b1d3-46c7-8895-02b81b0b4c94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.nMinV := MinV; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="PrechargeState" Id="{0f6258ca-c6a9-41b4-add8-eb0bf7f0eb79}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PrechargeState : I_State]]></Declaration>
+      <Get Name="Get" Id="{2a02fa5c-2935-4fde-a832-f8e48f73370d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PrechargeState := THIS^.fbPrechargeState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PrevMessage" Id="{273ac5ce-1608-42a8-8cc1-39484e4b31f8}">
+      <Declaration><![CDATA[PROPERTY PrevMessage : STRING(600)]]></Declaration>
+      <Get Name="Get" Id="{c56a292f-613c-4e18-91ef-bb04df7392d5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PrevMessage := THIS^.sPrevMessage;  ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{66dd7443-43e4-4366-a842-58df6f124e06}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.sPrevMessage := PrevMessage; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Run" Id="{aa26d819-7ea7-4888-820e-bab0677fabe5}">
+      <Declaration><![CDATA[METHOD PUBLIC Run
+VAR_INPUT
+	(* User buttons *)
+	bAck							: BOOL; // User "next state" button
+	bDischarge						: BOOL; // User "discharge" trigger button
+	
+	(* Sensors *)
+	nVSensors 		 				: ARRAY[0..1] OF INT; // defining 2 elements array of INT type as input to the PLC task
+	nASensors 						: ARRAY[0..1] OF INT; 
+	
+	bMainContactorsFB				: ARRAY[0..1] OF BOOL; 
+	bBypassContactorsFB				: ARRAY[0..1] OF BOOL;
+	
+	bReset							: BOOL; // Reset signal
+	bESTOP							: BOOL; // TRUE when the button is pressed
+END_VAR
+
+VAR
+END_VAR
+
+VAR_OUTPUT
+	bMainContactors					: ARRAY[0..1] OF BOOL; 
+	bBypassContactors				: ARRAY[0..1] OF BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(* ------------------------------------- SAFETY ------------------------------------ *)
+//E-Stop check
+IF NOT(bESTOP) THEN	
+	ipState.Stop(); // sets state to ErrorState
+	ipState.Check(); 
+	bMainContactors := THIS^.MainContactors; 
+	bBypassContactors := THIS^.BypassContactors;
+	RETURN;
+END_IF
+//Reset check
+IF ipState = ErrorState AND bReset THEN // reset has been pressed 
+	ipState.Reset();
+END_IF
+// Functionning contactors check
+IF RunCounter MOD 15 = 0  THEN // Checks contactors every 15 run loop because it takes some time for the feedback to adjust
+	CheckContactors(); // Ensures that the contactors signals are the same as the contactors states
+END_IF
+
+
+(* ---------------------------------- STATE MACHINE ------------------------------------ *) 
+
+(*Contactors*)
+THIS^.MainContactorsFB := bMainContactorsFB;
+THIS^.BypassContactorsFB := bBypassContactorsFB;
+
+(* Buttons*) 
+rtrigButtonAck(CLK := bAck); // Sets trigger for bUserButton variable 
+rtrigButtonDisch(CLK := bDischarge); 
+
+(*Sensors*)
+THIS^.nVSensors := nVSensors;
+THIS^.nASensors := nASensors; 
+
+(* Timer configuration *) 
+charge_TON(PT := THIS^.tMaxTime);
+
+THIS^.ScaleSensors(); // Scaling the values of the sensors which will be used in the state machine 
+
+IF (charge_TON.Q) THEN
+	ipState.TimerDone(); // Used for the precharge state 
+END_IF
+
+IF (rtrigButtonDisch.Q) THEN
+	ipState.PressDischarge();
+END_IF
+
+IF (rtrigButtonAck.Q) THEN
+	ipState.PressButton();
+END_IF
+
+ipState.Check(); 
+
+// Output of the state machine
+bMainContactors := THIS^.MainContactors; 
+bBypassContactors := THIS^.BypassContactors;
+RETURN;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RunCounter" Id="{d7d567fe-18df-4ccb-a1db-19c2d596cda8}">
+      <Declaration><![CDATA[PROPERTY PRIVATE RunCounter : UINT]]></Declaration>
+      <Get Name="Get" Id="{e51dfb75-db36-44e1-b84e-12e802a29d59}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RunCounter := THIS^.nRunCounter; ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3dff1c7b-7cb7-4b48-9716-99b3dd3edbb5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.nRunCounter := RunCounter;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="ScaleSensors" Id="{9b0f7485-2064-4eec-a39e-57048287efde}">
+      <Declaration><![CDATA[METHOD PRIVATE ScaleSensors
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Scaling of V sensors
+FOR n_idx_1 := 0 TO 1 DO
+	fVSensorsScaled[n_idx_1] := 1000*INT_TO_REAL(THIS^.nVSensors[n_idx_1])/32768;
+	// e.g., if 1000 V on sensor --> card measures +10V --> software value = 32767 --> scaling is therefore 1000*VAL/32768
+END_FOR
+
+FOR n_idx_1 := 0 TO 1 DO
+	fASensorsScaled[n_idx_1] := 25*INT_TO_REAL(THIS^.nASensors[n_idx_1])/32768; 
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState" Id="{ddeba8f7-7a9c-4901-8805-d3489532460b}">
+      <Declaration><![CDATA[METHOD INTERNAL SetState
+VAR_INPUT
+	newState		: I_State;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ipState := newState; ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="UpperBoundV" Id="{d4d1447e-21c9-4aba-9316-e6e68dccfac4}">
+      <Declaration><![CDATA[PROPERTY PUBLIC UpperBoundV : INT]]></Declaration>
+      <Get Name="Get" Id="{3e540550-6b62-4e7a-b84a-510c07acda1c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[UpperBoundV := THIS^.nUpperBoundV;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{fa472455-c96b-49cb-84e5-ce9c2077e5f4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^.nUpperBoundV := UpperBoundV; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="VSensors" Id="{d1b37c15-fafb-41c7-b323-a87360965ae7}">
+      <Declaration><![CDATA[PROPERTY PUBLIC VSensors : ARRAY[0..1] OF REAL]]></Declaration>
+      <Get Name="Get" Id="{3e096f8f-51a3-45f2-aef7-fb41c0a21fd0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[VSensors := THIS^.fVSensorsScaled; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_MACHINE">
+      <LineId Id="101" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.AddToLog">
+      <LineId Id="5" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="13" Count="5" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="34" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.ASensors.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.BypassContactors.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.BypassContactors.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.BypassContactorsFB.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.BypassContactorsFB.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.ChargedState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.CheckContactors">
+      <LineId Id="96" Count="2" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="131" Count="1" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="113" Count="1" />
+      <LineId Id="117" Count="2" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.DischargeState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.DisconnectedState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.ErrorState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.FB_init">
+      <LineId Id="38" Count="0" />
+      <LineId Id="42" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.IdleState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.Logs.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.LowerBoundV.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.LowerBoundV.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MainContactors.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MainContactors.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MainContactorsFB.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MainContactorsFB.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.Message.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.Message.Set">
+      <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MinV.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.MinV.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.PrechargeState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.PrevMessage.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.PrevMessage.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.Run">
+      <LineId Id="213" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="208" Count="1" />
+      <LineId Id="206" Count="1" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="216" Count="2" />
+      <LineId Id="215" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="239" Count="1" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="232" Count="1" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="225" Count="1" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="230" Count="1" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="115" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.RunCounter.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.RunCounter.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.ScaleSensors">
+      <LineId Id="6" Count="7" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.SetState">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.UpperBoundV.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.UpperBoundV.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MACHINE.VSensors.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

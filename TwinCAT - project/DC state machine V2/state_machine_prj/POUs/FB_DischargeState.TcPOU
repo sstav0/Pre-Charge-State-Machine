@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_DischargeState" Id="{d936db11-0e95-46d7-81bd-179f7d572f5f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_DischargeState IMPLEMENTS I_State
+VAR
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+	fVSensors		: ARRAY [0..1] OF REAL; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{e77e82bd-9732-4d14-97e6-f45fe3cbee73}">
+      <Declaration><![CDATA[METHOD PUBLIC Check
+VAR
+	fLoadVoltage			: REAL; 
+	fInputVoltage			: REAL; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ResetContactors(); // THE CONTACTORS NEED TO ALAWAYS BE OPEN IN THIS STATE NO MATTER WHAT WAS THE PREVIOUS STATE
+THIS^.ResetTimer(); // in case the emergency stop is pressed while the circuit is in precharge state
+fVSensors := THIS^.pMachine^.VSensors;
+
+fInputVoltage := fVSensors[0];
+fLoadVoltage := fVSensors[1];
+
+IF (fLoadVoltage < 0.1 * fInputVoltage) THEN
+	THIS^.pMachine^.Message := '[DISCHARGE] The load voltage is now less than 1 percent of the input voltage.$0A WAITING FOR ACKNOWLEDGEMENT TO DISCONNECT SYSTEM.';
+ELSE 
+	THIS^.pMachine^.Message := '[DISCHARGE] Waiting for load voltage to be lower than 10 percent of the input voltage.';
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{10b747bc-a5f5-42e4-9e65-f99c74376d25}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{ea3a037d-09e6-4763-a38c-ac1899021b9a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'DISCHARGE';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{ee9d4094-8995-41ea-a6eb-751972b2dceb}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{4b95c776-2eae-4fd5-a550-441e9aa9038d}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton 
+VAR
+	fLoadVoltage		: REAL; 
+	fInputVoltage		: REAL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fVSensors := THIS^.pMachine^.VSensors;
+fInputVoltage := fVSensors[0];
+fLoadVoltage := fVSensors[1];
+
+IF (fLoadVoltage < 0.1 * fInputVoltage) THEN
+	THIS^.pMachine^.Message := '[DISCHARGE] Acknowledge button has been pressed. $0A SYSTEM ENTERS DISCONNECTED STATE.';
+	THIS^.pMachine^.SetState(THIS^.pMachine^.DisconnectedState);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{48a24bc7-2eef-49e1-ad6f-c16283f46719}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{1c6d2c1d-ccf5-42f4-9d9e-e8be902f80bc}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetContactors" Id="{9e9d5034-c6a6-4e71-9ab9-f9a397f67841}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetContactors
+VAR
+	nIdx					: INT := 0; 
+	bBypassContactors		: ARRAY[0..1] OF BOOL; 
+	bMainContactors			: ARRAY[0..1] OF BOOL; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 BY 1 DO 
+	bBypassContactors[nIdx] := FALSE;
+	bMainContactors[nIdx] := FALSE; 
+END_FOR
+
+THIS^.pMachine^.BypassContactors := bBypassContactors; // Reset every contactor 
+THIS^.pMachine^.MainContactors := bMainContactors; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetTimer" Id="{76b95b83-b0d7-40ca-af06-4cb9bb2aac1d}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetTimer]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.charge_TON.IN := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{ae487eac-c183-44d2-9ed6-5dcf1898df87}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.ErrorState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{9b1c3bd0-4a2f-4498-8236-60f3b0455476}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_DischargeState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.Check">
+      <LineId Id="63" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="53" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.PressButton">
+      <LineId Id="32" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="22" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.PressDischarge">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.Reset">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.ResetContactors">
+      <LineId Id="4" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.ResetTimer">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DischargeState.TimerDone">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

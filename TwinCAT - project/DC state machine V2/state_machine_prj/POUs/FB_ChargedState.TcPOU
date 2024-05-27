@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_ChargedState" Id="{6ccb0767-b26e-4ca8-b32e-b0274bc0898c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_ChargedState IMPLEMENTS I_State
+VAR
+	pMachine				: POINTER TO FB_Machine; // Points to the state machine (THIS)	
+	fVSensors 				: ARRAY[0..1] OF REAL;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{fedb8386-7dee-4770-bcfd-13bf41bd1b84}">
+      <Declaration><![CDATA[METHOD PUBLIC Check 
+VAR
+	fInputVoltage			: REAL;
+	fLoadVoltage 			: REAL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.SetMainContactors(); // not necessary but reinforces safety 
+THIS^.SetBypassContactors(); // necessary
+
+fVSensors := THIS^.pMachine^.VSensors;
+
+fLoadVoltage := fVSensors[1];
+fInputVoltage := fVSensors[0];
+
+IF (fLoadVoltage <= 1.1 * fInputVoltage AND fLoadVoltage >= 0.9502 * fInputVoltage) THEN
+	IF (fInputVoltage >= THIS^.pMachine^.LowerBoundV AND fInputVoltage <= THIS^.pMachine^.UpperBoundV) THEN
+		THIS^.pMachine^.Message := '[CHARGED] The input and load voltages are within the boundaries. $0A PRESS "DISCHARGE" TO ENTER DISCHARGE STATE';
+  	ELSE 
+		THIS^.pMachine^.Message := '[CHARGED] The load voltage corresponds to the input voltage, but is not included within the defined limits.$0A THE SYSTEM ENTERS DISCHARGE STATE';
+		THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);
+	END_IF
+ 
+ELSE
+	THIS^.pMachine^.Message := '[CHARGED] The load voltage DOES NOT match the input voltage.$0A THE SYSTEM ENTERS DISCHARGE STATE';
+	THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{fc9f2ec7-d167-4132-9d9f-13de5948a19e}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{4e7123ed-cd33-47ab-8743-ade73c3f1c6c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'CHARGED'; ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{efde9a62-674a-488a-99b1-3c8f9066992d}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init 
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{231f6bc4-0fe7-4fcb-a90e-7626ad2adeb0}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton	
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{edac99bf-f040-4eaf-a27a-fdea7a5b1dcc}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge 
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[CHARGED] Discharge button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{b7743eac-850b-46c9-994c-dc501161fe3b}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[CHARGED] Reset button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetBypassContactors" Id="{e961f1d6-7819-403e-8041-72813777c5e0}">
+      <Declaration><![CDATA[METHOD PUBLIC SetBypassContactors
+VAR
+	nIdx				: INT;
+	bBypassContactors	: ARRAY[0..1] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 DO 
+	bBypassContactors[nIdx] := TRUE; 
+END_FOR
+
+THIS^.pMachine^.BypassContactors := bBypassContactors;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetMainContactors" Id="{3a7a8f7c-ae40-49d5-8840-68e5675f2352}">
+      <Declaration><![CDATA[METHOD PUBLIC SetMainContactors
+VAR
+	nIdx				: INT;
+	bMainContactors 	: ARRAY[0..1] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 DO 
+	bMainContactors[nIdx] := TRUE;
+END_FOR
+
+THIS^.pMachine^.MainContactors := bMainContactors;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{00130648-37c2-420d-abb2-efa751e9696b}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.ErrorState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{2d662e3e-8fd2-498a-9f96-83f3a4fa2ba0}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone 
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ChargedState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.Check">
+      <LineId Id="89" Count="1" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="91" Count="8" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="101" Count="3" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.PressButton">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.PressDischarge">
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.Reset">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.SetBypassContactors">
+      <LineId Id="4" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.SetMainContactors">
+      <LineId Id="4" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChargedState.TimerDone">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

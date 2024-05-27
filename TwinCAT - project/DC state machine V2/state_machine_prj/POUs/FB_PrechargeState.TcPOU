@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_PrechargeState" Id="{d1ebba1d-4b62-4da0-ae46-989c293d5de3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_PrechargeState  IMPLEMENTS I_State
+VAR
+	pMachine				: POINTER TO FB_Machine; // Points to the state machine (THIS)
+	fVSensors				: ARRAY [0..1] OF REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{fd9b2df2-42c3-40db-96cb-3b025d8e7991}">
+      <Declaration><![CDATA[METHOD PUBLIC Check
+VAR
+	fLoadVoltage			: REAL;
+	fInputVoltage 			: REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.SetMainContactors();
+fVSensors := THIS^.pMachine^.VSensors;
+
+fInputVoltage := fVSensors[0];
+fLoadVoltage := fVSensors[1];
+
+IF (fLoadVoltage > 1.1 * fInputVoltage) THEN
+	(* If the load voltage is greater than 110% of the input voltage then we consider that there is a problem and the load is disconnected *)
+	THIS^.pMachine^.Message := '[PRECHARGE] The load voltage is greater than 110 percent of the input voltage.$0A THE SYSTEM ENTERS DISCHARGE STATE';
+	THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState); 
+	
+ELSIF (fLoadVoltage <= 1.1 * fInputVoltage AND fLoadVoltage >= 0.9502 * fInputVoltage) THEN
+	THIS^.ResetTimer();
+	THIS^.pMachine^.Message := '[PRECHARGE]The load voltage is within the boundaries.$0A WAITING FOR USER ACKNOWLEDGMENT TO ENTER CHARGE STATE.';
+END_IF;
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{30c72e8b-1fbc-4524-8441-614f0ae2c91e}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{98c05ff7-dc64-4257-8237-00615927e6fa}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'PRE-CHARGE';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{cc325abb-4390-4cef-a637-c2f3b34ae42e}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{8b368998-1630-4119-b689-7c30c901f5a4}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton
+VAR
+	fLoadVoltage			: REAL;
+	fInputVoltage 			: REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fVSensors := THIS^.pMachine^.VSensors;
+fInputVoltage := fVSensors[0];
+fLoadVoltage := fVSensors[1];
+
+IF (fLoadVoltage <= 1.1 * fInputVoltage AND fLoadVoltage >= 0.9502 * fInputVoltage) THEN
+	THIS^.ResetTimer(); // Not necessary, here for redundancy 
+	THIS^.pMachine^.SetState(THIS^.pMachine^.ChargedState);	
+	THIS^.pMachine^.Message := '[PRECHARGE] Acknowledge button has been pressed. $0A SYSTEM ENTERS CHARGED STATE.';
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{b923a2fd-33dc-4374-b0d1-692a68123e5b}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[PRECHARGE] Discharge button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{4f6e847f-ae68-4fe7-afbd-3e4eaffb6f34}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[PRECHARGE] Reset button has been pressed. $0A SYSTEM ENTERS DISCHARGE STATE.';
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetMainContactors" Id="{3e946144-0152-4ef0-b2fb-b25e3a1eb34b}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetMainContactors
+VAR
+	nIdx				: INT;
+	bMainContactors		: ARRAY[0..1] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 DO
+	bMainContactors[nIdx] := FALSE; 
+END_FOR
+
+THIS^.pMachine^.MainContactors := bMainContactors;
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetTimer" Id="{b3bca30e-980b-4cf7-afed-1d180c2263a2}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetTimer
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.charge_TON.IN := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetMainContactors" Id="{c55e4912-c420-4f87-8d31-e610ee5e0fe3}">
+      <Declaration><![CDATA[METHOD PUBLIC SetMainContactors
+VAR
+	nIdx				: INT;
+	bMainContactors		: ARRAY[0..1] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 DO
+	bMainContactors[nIdx] := TRUE; 
+END_FOR
+
+THIS^.pMachine^.MainContactors := bMainContactors;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{7563b819-8f80-4a9d-a762-cb58f7db3cfc}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.ErrorState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{d69bb403-5ea5-4558-8409-a36e124b0824}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.Message := '[PRECHARGE] The charging time has exceeded the set limit.$0A THE SYSTEM ENTERS DISCHARGE STATE'; 		 
+
+THIS^.ResetTimer(); 
+
+THIS^.pMachine^.SetState(THIS^.pMachine^.DischargeState); 
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_PrechargeState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.Check">
+      <LineId Id="80" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.PressButton">
+      <LineId Id="68" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="65" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.PressDischarge">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.Reset">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.ResetMainContactors">
+      <LineId Id="6" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="10" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.ResetTimer">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.SetMainContactors">
+      <LineId Id="17" Count="4" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PrechargeState.TimerDone">
+      <LineId Id="21" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

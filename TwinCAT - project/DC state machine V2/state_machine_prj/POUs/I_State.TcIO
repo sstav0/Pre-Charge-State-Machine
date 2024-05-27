@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_State" Id="{1bde4dc7-ad40-4977-a870-ea0a6b0033a4}">
+    <Declaration><![CDATA[INTERFACE I_State
+]]></Declaration>
+    <Method Name="Check" Id="{b245be02-aa95-4793-a4a1-45881f680e36}">
+      <Declaration><![CDATA[METHOD PUBLIC Check
+
+]]></Declaration>
+    </Method>
+    <Property Name="Description" Id="{0887b0dc-99d1-4e94-a136-582c1cd1dded}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{f15343b1-d437-42e5-9325-bf2fc67af358}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="PressButton" Id="{5f90240b-e852-4d11-809b-01436ec01f56}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton
+]]></Declaration>
+    </Method>
+    <Method Name="PressDischarge" Id="{58412862-6253-4565-abcf-db6579e1f705}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge
+
+]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{ec94a8f1-7aa1-443c-bd08-21942ad945a8}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+    </Method>
+    <Method Name="Stop" Id="{95bfd00f-897b-4976-8d1f-deb515d63881}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+    </Method>
+    <Method Name="TimerDone" Id="{bb9a359f-c0ba-4be7-9e53-9cedbe13fd26}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

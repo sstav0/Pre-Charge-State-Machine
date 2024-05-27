@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_DisconnectedState" Id="{b6c9100b-ee0f-440e-b30d-6ce4ff78067b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_DisconnectedState IMPLEMENTS I_State
+VAR
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+	fVSensors		: ARRAY[0..1] OF REAL; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+]]></ST>
+    </Implementation>
+    <Method Name="Check" Id="{f7b4c791-cd0a-45fe-88c9-0fe129bd6102}">
+      <Declaration><![CDATA[METHOD PUBLIC Check
+VAR
+	fInputVoltage 		: REAL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ResetContactors(); //THE CONTACTORS NEED TO ALWAYS BE OPEN IN THIS STATE
+fVSensors := THIS^.pMachine^.VSensors;
+fInputVoltage := fVSensors[0];
+
+IF (fInputVoltage >= THIS^.pMachine^.MinV) THEN
+	THIS^.pMachine^.Message := '[DISCONNECTED] The input voltage is >= than the minimum voltage. $0A WAITING FOR ACKNOWLEDGEMENT TO ENTER IDLE STATE;';
+ELSE 
+	THIS^.pMachine^.Message := '[DISCONNECTED]The input voltage is <= than the minimum voltage.';
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Description" Id="{3242d7fd-7be6-46ed-8cdb-6f18a3c23c7f}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Description : STRING]]></Declaration>
+      <Get Name="Get" Id="{59bb9789-25c7-40b4-913d-675faf0da855}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Description := 'DISCONNECTED';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{740eb518-5aff-468b-8d2a-587ff6255015}">
+      <Declaration><![CDATA[METHOD PUBLIC FB_init
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	pMachine		: POINTER TO FB_Machine; // Points to the state machine (THIS)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine := pMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressButton" Id="{e6c89707-d232-4033-95e2-33255f005dce}">
+      <Declaration><![CDATA[METHOD PUBLIC PressButton 
+VAR
+	//fbIdleSTate		: FB_IdleState(THIS^.pMachine); => variable for changing state method that causes a PLC bug
+	fInputVoltage		: REAL; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fVSensors := THIS^.pMachine^.VSensors;
+fInputVoltage := fVSensors[0];
+
+IF (fInputVoltage >= THIS^.pMachine^.MinV) THEN
+		//THIS^.pMachine^.SetState(fbIdleState); => changing state method that causes a PLC bug
+		THIS^.pMachine^.Message := '[DISCONNECTED] Acknowledge button has been pressed. $0A SYSTEM ENTERS IDLE STATE.';
+		THIS^.pMachine^.SetState(THIS^.pMachine^.IdleState);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PressDischarge" Id="{13d2dd19-2000-4709-9874-14f10538b54a}">
+      <Declaration><![CDATA[METHOD PUBLIC PressDischarge
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{5527b193-c28b-4d9e-b368-bee68cae1ff1}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetContactors" Id="{57b6047e-2a92-40e6-b4a9-31e4fbc5e8b0}">
+      <Declaration><![CDATA[METHOD PUBLIC ResetContactors
+VAR
+	nIdx					: INT := 0; 
+	bBypassContactors		: ARRAY[0..1] OF BOOL; 
+	bMainContactors			: ARRAY[0..1] OF BOOL; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIdx := 0 TO 1 BY 1 DO 
+	bBypassContactors[nIdx] := FALSE;
+	bMainContactors[nIdx] := FALSE; 
+END_FOR
+
+THIS^.pMachine^.BypassContactors := bBypassContactors; // Reset every contactor 
+THIS^.pMachine^.MainContactors := bMainContactors; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{4ec2f479-c802-41f1-985e-64350926edc5}">
+      <Declaration><![CDATA[METHOD PUBLIC Stop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pMachine^.SetState(THIS^.pMachine^.ErrorState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimerDone" Id="{8beb5e78-39a9-4f59-8783-fd5f819a3f39}">
+      <Declaration><![CDATA[METHOD PUBLIC TimerDone]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_DisconnectedState">
+      <LineId Id="17" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.Check">
+      <LineId Id="47" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="84" Count="2" />
+      <LineId Id="71" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.Description.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.PressButton">
+      <LineId Id="21" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.PressDischarge">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.Reset">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.ResetContactors">
+      <LineId Id="4" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.Stop">
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DisconnectedState.TimerDone">
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
